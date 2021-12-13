@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
-import Dropdown from 'reactstrap/lib/Dropdown';
-import DropdownItem from 'reactstrap/lib/DropdownItem';
 import { Button, NavDropdown } from 'react-bootstrap';
 import ReactSession from 'react-client-session/dist/ReactSession';
 
@@ -21,7 +19,7 @@ export class NavMenu extends Component {
         let loggedIn = false;
         let token = null;
 
-        if (props.loggedIn !== undefined || props.token == undefined) {
+        if (props.loggedIn !== undefined || props.token === undefined) {
             loggedIn = ReactSession.get("loggedIn");
             token = ReactSession.get("token");
         }
@@ -49,7 +47,7 @@ export class NavMenu extends Component {
         let LoginLogoutButton;
         let path = window.location.pathname;
 
-        if (path == "/login" || path == "/logout" || path == "/register") {
+        if (path === "/login" || path === "/logout" || path === "/register") {
             LoginLogoutButton = <></>;
         }else if (localStorage.getItem("loggedin")) {
             LoginLogoutButton = (
@@ -69,7 +67,7 @@ export class NavMenu extends Component {
     return (
         <header>
             <Navbar style={this.navbarStyle} className="navbar-expand-sm navbar-toggleable-sm ng-white box-shadow mb-3" dark>
-                <NavbarBrand style={this.navbarBrandStyle} tag={Link} to="/" className="p-3"><img src="./images/logo_white_name_only.svg" /></NavbarBrand>
+                <NavbarBrand style={this.navbarBrandStyle} tag={Link} to="/" className="p-3"><img src="./images/logo_white_name_only.svg" alt=""/></NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2"/>
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">

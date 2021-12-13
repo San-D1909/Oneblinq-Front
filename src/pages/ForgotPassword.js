@@ -1,4 +1,4 @@
-﻿import React, { Component, useEffect } from 'react';
+﻿import React, { Component } from 'react';
 import { Input } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
 import Card from 'reactstrap/lib/Card';

@@ -1,14 +1,10 @@
 ﻿import { Redirect } from 'react-router-dom';
 import { Admin, Resource, ListGuesser, EditGuesser } from 'react-admin';
-import { ThemeOptions } from '@material-ui/core';
-import fakeDataProvider from 'ra-data-fakerest';
 import { PluginCreate, PluginEdit, PluginList, PluginShow } from "../User/Plugins";
 import { LicenseList, LicenseShow } from "../User/License";
 import simpleRestProvider from 'ra-data-simple-rest';
 import React, { forwardRef } from 'react';
-import { useLogout } from 'react-admin';
-import MenuItem from '@material-ui/core/MenuItem';
-import ExitIcon from '@material-ui/icons/PowerSettingsNew';
+import {DeviceList, DeviceShow, DeviceCreate} from "./Devices";
 
 export const newOptions = {
     palette: {
@@ -58,6 +54,11 @@ const UserDashboard = () => {
                 show={LicenseShow}
             />
             <Resource name="plugin" list={PluginList} show={PluginShow} />
+            <Resource name="device" 
+                list={DeviceList} 
+                show={DeviceShow} 
+                create={DeviceCreate}
+            />
         </Admin>
     );
 }
