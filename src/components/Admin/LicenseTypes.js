@@ -9,7 +9,6 @@ export const LicenseTypeList = (props) => (
         <Datagrid>
             <TextField source="typeName" label="Name" />
             <NumberField source="maxAmount" label="Max amount" />
-            <NumberField source="monthlyPeriod" label="Monthly period" />
             <LicenseTypeShowButton {...props} />
         </Datagrid>
     </List>
@@ -21,7 +20,6 @@ export const LicenseTypeCreate = (props) => (
         <SimpleForm>
             <TextInput source="typeName" label="Name" validate={required()} />
             <NumberInput source="maxAmount" label="Max amount" validate={required()} />
-            <NumberInput source="monthlyPeriod" label="Monthly period" validate={required()} />
         </SimpleForm>
     </Create>
 );
@@ -31,14 +29,13 @@ export const LicenseTypeEdit = (props) => (
         <SimpleForm>
             <TextInput source="typeName" label="Name" validate={required()} />
             <NumberInput source="maxAmount" label="Max amount" validate={required()} />
-            <NumberInput source="monthlyPeriod" label="Monthly period" validate={required()} />
         </SimpleForm>
     </Edit>
 );
 
 const LicenseTypeShowButton = ({ record }) => {
     return (
-    <ShowButton basePath="plugin" label="Show info" record={ record } />
+    <ShowButton basePath="licenseType" label="Show info" record={ record } />
         );
     
 }
@@ -49,7 +46,6 @@ export const LicenseTypeShow = (props) => {
             <SimpleShowLayout>
                 <TextField source="typeName" label="Name" />
                 <NumberField source="maxAmount" label="Max amount" />
-                <NumberField source="monthlyPeriod" label="Monthly period" />
             </SimpleShowLayout>
         </Show>
     );

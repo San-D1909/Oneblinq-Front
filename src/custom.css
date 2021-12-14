@@ -81,3 +81,47 @@ body {
     background-color: #efa9ae;
     color: #ffffff;
 }
+.pricetag:before {
+  border: 16px solid transparent;
+  content: "";
+  height: 0;
+  left: 100%;
+  margin-left: -16px;
+  position: absolute;
+  transform: scaleX(.65);
+  top: 0;
+  width: 0;
+  border-top-color: rgb(238, 238, 238);
+}
+.pricetag:after {
+  border: 16px solid transparent;
+  content: "";
+  height: 0;
+  left: 100%;
+  margin-left: -16px;
+  position: absolute;
+  transform: scaleX(.65);
+  bottom: 0;
+  width: 0;
+  border-bottom-color: rgb(238, 238, 238);
+}
+
+.subscriptionoption[aria-selected=true] .pricetag {
+  background-color: #efa9ae !important;
+}
+
+.subscriptionoption[aria-selected=true] .pricetag:after {
+  border-bottom-color: #efa9ae !important;
+}
+
+.subscriptionoption[aria-selected=true] .pricetag:before {
+  border-top-color: #efa9ae !important;
+}
+
+.subscriptionoption[aria-selected=true] {
+  box-shadow: 0 0 0 2px #efa9ae !important;
+}
+
+.subscriptionoption > * {
+  pointer-events: none;
+}
