@@ -3,6 +3,8 @@ import { NavMenu } from '../components/NavMenu';
 import { PluginCard } from '../components/PluginCard'
 import { Footer } from '../components/Footer'
 import axios from 'axios'
+import "./CSS/SearchBox.css";
+
 
 function PluginList(props) {
     const { plugins } = props
@@ -61,6 +63,7 @@ function PluginBundleList(props) {
     )
 }
 
+
 export class Plugins extends Component {
     static displayName = Plugins.name;
     constructor(props) {
@@ -68,10 +71,14 @@ export class Plugins extends Component {
         this.state = {
             plugins: [],
             bundles: [],
-            hover: false
+            hover: false,
+            searchString:''
+
         }
         this.fetchPlugins = this.fetchPlugins.bind(this)
         this.fetchBundles = this.fetchBundles.bind(this)
+        this.GetBundleSearchResults = this.GetBundleSearchResults.bind(this)
+        this.GetPluginSearchResults = this.GetPluginSearchResults.bind(this)
     }
 
     async componentDidMount() {
@@ -89,10 +96,11 @@ export class Plugins extends Component {
             }]
         }]
     }
-
+    
     async fetchPlugins() {
         return await axios.get(process.env.REACT_APP_API_BACKEND + '/api/v1/Plugin').then(response => response.data)
     }
+
 
     hrStyling = {
         height: "2px",
@@ -100,6 +108,35 @@ export class Plugins extends Component {
         color: "#edeffc"
     }
 
+    GetPluginSearchResults = event => {
+        var self = this;
+        axios({
+            method: 'Post',
+            url: process.env.REACT_APP_API_BACKEND + '/api/v1/Plugin/SearchForPlugin',
+            params: {
+                searchString: event.target.value
+            }
+        }).then(data => {
+            self.setState({plugins:data.data})
+            console.log(data.data)
+            this.render()
+        })
+    }
+
+    GetBundleSearchResults = event => {
+        var self = this;
+        axios({
+            method: 'Post',
+            url: process.env.REACT_APP_API_BACKEND + '/api/v1/Plugin/SearchForBundle',
+            params: {
+                searchString: event.target.value
+            }
+        }).then(data => {
+            self.setState({bundles:data.data})
+            console.log(data.data)
+            this.render()
+        })
+    }
 
     showMoreHoverStyling = {
 
@@ -128,12 +165,23 @@ export class Plugins extends Component {
         return (
             <>
                 <NavMenu />
+
                 <h1 className="row m-0 justify-content-center" style={{ color: '#edeffc' }} >Plugin Bundles</h1>
+                <div className="search-box" style={{margin:'auto',padding: '10px'}}>
+                    <button className="btn-search"><i className="fas fa-search"></i></button>
+                    <input type="text" className="input-search" placeholder="Type to Search..."
+                           onChange={(e) => this.GetBundleSearchResults(e)}></input>
+                </div>
                 <hr style={this.hrStyling} className="container" />
                 <div className="container">
                     <PluginBundleList bundles={this.state.bundles} />
                 </div>
                 <h1 className="row m-0 justify-content-center" style={{ color: '#edeffc' }} >Plugins</h1>
+                <div className="search-box" style={{margin:'auto',padding: '10px'}}>
+                    <button className="btn-search"><i className="fas fa-search"></i></button>
+                    <input type="text" className="input-search" placeholder="Type to Search..."
+                           onChange={(e) => this.GetPluginSearchResults(e)}></input>
+                </div>
                 <hr style={this.hrStyling} className="container"  />
                 <div className="container">
                     <PluginList plugins={this.state.plugins} />
