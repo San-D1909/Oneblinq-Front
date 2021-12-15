@@ -104,7 +104,7 @@ export default class PluginInfo extends Component {
     async componentDidMount() {
         const { data: plugin } = await axios.get(process.env.REACT_APP_API_BACKEND + '/api/v1/Plugin/' + this.state.pluginId)
         const { data: variants } = await axios.get(process.env.REACT_APP_API_BACKEND + `/api/v1/admin/PluginVariant?filter={"pluginId":${plugin.id}}`);
-        this.setState({ plugin, licenseTypes: variants });
+        this.setState({ plugin, licenseTypes: variants, selectedSubscription: variants[0] });
     }
 
     selectSubscription = async (e) => {
@@ -121,7 +121,7 @@ export default class PluginInfo extends Component {
     }
 
     subscribeSubscription = (e) => {
-        console.log(this.state);
+        console.log(this.state.selectedSubscription);
     }
 
     render() {
