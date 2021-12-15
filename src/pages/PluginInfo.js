@@ -1,14 +1,10 @@
-﻿import React, {Component, useState} from 'react';
+﻿import React, { Component } from 'react';
 import Card from 'reactstrap/lib/Card';
 import CardBody from 'reactstrap/lib/CardBody';
 import CardImg from 'reactstrap/lib/CardImg';
 import { NavMenu } from '../components/NavMenu';
 import { Footer } from '../components/Footer';
 import axios from 'axios';
-
-const buttonFontSize = {
-    fontSize: '1.5rem'
-};
 
 const textStyling = {
     color: 'white'
@@ -25,7 +21,7 @@ const SubscribeButtonStyle = {
     border: "1px solid #2a8387 !important"
 }
 
-function SubscriptionList(props)  {
+function SubscriptionList(props) {
 
     const subscriptionOptionStyling = {
         background: "#fff",
@@ -64,21 +60,20 @@ function SubscriptionList(props)  {
         marginTop: "10px"
     }
 
-    const { licenseTypes, plugin, subscriptionClick, subscribeSubscription } = props;
+    const { licenseTypes, subscriptionClick, subscribeSubscription } = props;
 
 
-    const listItems = licenseTypes.map((licenseType, i) => {
-        let priceDecimals = parseFloat(plugin.monthlyPrice * licenseType.maxAmount).toFixed(2);
+    const listItems = licenseTypes.map(({ price, name, maxAmount }, i) => {
         return (
             <label data-listnumber={i} onClick={subscriptionClick} key={i} className="subscriptionoption" style={subscriptionOptionStyling} aria-selected={i === 1 ? "false" : "true"}>
                 <div className="pricetag" style={subscriptionPriceTag}>
-                    <b>€ {priceDecimals}</b>
+                    <b>€ {price}</b>
                     <span> een maand</span>
                 </div>
                 <div>
-                    <h4 style={subscriptionTitle}>{licenseType.typeName}</h4>
+                    <h4 style={subscriptionTitle}>{name}</h4>
                 </div>
-                <div style={subscriptionSubTitle}>For {licenseType.maxAmount === 1 ? "a single" : licenseType.maxAmount } Figma user</div>
+                <div style={subscriptionSubTitle}>For {maxAmount === 1 ? "a single Figma user" : maxAmount + " Figma users"} </div>
             </label>
         );
     });
@@ -104,27 +99,17 @@ export default class PluginInfo extends Component {
             selectedSubscription: {},
             pluginId: props.match.params.pluginId
         }
-        // this.fetchLicenseTypes = this.fetchLicenseTypes.bind(this);
-        // this.fetchPluginById = this.fetchPluginById.bind(this);
     }
 
     async componentDidMount() {
-        await axios.get(process.env.REACT_APP_API_BACKEND + '/api/v1/LicenseType').then(response => {
-            console.log(response);
-            return response.data;
-        }).then(data  => {
-            this.setState({licenseTypes: data, selectedSubscription: data[0]});
-        });
-        await axios.get(process.env.REACT_APP_API_BACKEND + '/api/v1/Plugin/' + this.state.pluginId).then(response => {
-            console.log(response.data);
-            this.setState({ pluginId: response.data.id })
-            return response.data;
-        }).then(data => this.setState({plugin: data}));
+        const { data: plugin } = await axios.get(process.env.REACT_APP_API_BACKEND + '/api/v1/Plugin/' + this.state.pluginId)
+        const { data: variants } = await axios.get(process.env.REACT_APP_API_BACKEND + `/api/v1/admin/PluginVariant?filter={"pluginId":${plugin.id}}`);
+        this.setState({ plugin, licenseTypes: variants });
     }
 
     selectSubscription = async (e) => {
         let elements = document.getElementsByClassName("subscriptionoption");
-        for(let i = 0; elements.length > i; i++) {
+        for (let i = 0; elements.length > i; i++) {
             if (elements[i].attributes.getNamedItem("aria-selected")) {
                 elements[i].attributes.removeNamedItem("aria-selected");
             }
@@ -132,7 +117,7 @@ export default class PluginInfo extends Component {
 
         let selectedNumber = e.target.dataset.listnumber;
         elements[parseInt(selectedNumber)].setAttribute("aria-selected", true);
-        this.setState({selectedSubscription: this.state.licenseTypes[selectedNumber]});
+        this.setState({ selectedSubscription: this.state.licenseTypes[selectedNumber] });
     }
 
     subscribeSubscription = (e) => {
@@ -159,10 +144,6 @@ export default class PluginInfo extends Component {
                         <div className="p-1" style={textStyling} dangerouslySetInnerHTML={{ __html: this.state.plugin.pluginDescription }} />
                     </div>
                     <SubscriptionList subscriptionClick={this.selectSubscription} subscribeSubscription={this.subscribeSubscription} plugin={this.state.plugin} licenseTypes={this.state.licenseTypes} />
-                    {/*<div className="btnholder">*/}
-                    {/*    <PluginBuyButton />*/}
-                    {/*    <Button style={buttonFontSize} className="m-1 px-4 py-3" variant="outline-light" href="">Add to wishlist</Button>*/}
-                    {/*</div>*/}
                 </div>
                 <Footer />
             </>
