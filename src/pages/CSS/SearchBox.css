@@ -6,7 +6,22 @@
     height: fit-content;
     position: relative;
 }
-.input-search{
+.input-search1{
+    box-sizing: border-box;
+    height: 50px;
+    width: 50px;
+    border-style: none;
+    padding: 10px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    outline: none;
+    border-radius: 25px;
+    transition: all .5s ease-in-out;
+    background-color: #FFFFFF;
+    padding-right: 40px;
+    color:#fff;
+}
+.input-search2{
     box-sizing: border-box;
     height: 50px;
     width: 50px;

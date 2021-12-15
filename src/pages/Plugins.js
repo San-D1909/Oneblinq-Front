@@ -96,7 +96,7 @@ export class Plugins extends Component {
             }]
         }]
     }
-    
+
     async fetchPlugins() {
         return await axios.get(process.env.REACT_APP_API_BACKEND + '/api/v1/Plugin').then(response => response.data)
     }
@@ -127,7 +127,7 @@ export class Plugins extends Component {
         var self = this;
         axios({
             method: 'Post',
-            url: process.env.REACT_APP_API_BACKEND + '/api/v1/Plugin/SearchForBundle',
+            url: process.env.REACT_APP_API_BACKEND + '/api/v1/PluginBundle/SearchForPluginBundle',
             params: {
                 searchString: event.target.value
             }
@@ -169,7 +169,7 @@ export class Plugins extends Component {
                 <h1 className="row m-0 justify-content-center" style={{ color: '#edeffc' }} >Plugin Bundles</h1>
                 <div className="search-box" style={{margin:'auto',padding: '10px'}}>
                     <button className="btn-search"><i className="fas fa-search"></i></button>
-                    <input type="text" className="input-search" placeholder="Type to Search..."
+                    <input type="text" className="input-search1" placeholder="Type to Search..."
                            onChange={(e) => this.GetBundleSearchResults(e)}></input>
                 </div>
                 <hr style={this.hrStyling} className="container" />
@@ -179,7 +179,7 @@ export class Plugins extends Component {
                 <h1 className="row m-0 justify-content-center" style={{ color: '#edeffc' }} >Plugins</h1>
                 <div className="search-box" style={{margin:'auto',padding: '10px'}}>
                     <button className="btn-search"><i className="fas fa-search"></i></button>
-                    <input type="text" className="input-search" placeholder="Type to Search..."
+                    <input type="text" className="input-search2" placeholder="Type to Search..."
                            onChange={(e) => this.GetPluginSearchResults(e)}></input>
                 </div>
                 <hr style={this.hrStyling} className="container"  />
