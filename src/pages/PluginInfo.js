@@ -61,37 +61,35 @@ const subscriptionSubTitle = {
 function ProductVariants({ variant, setVariant, variants }) {
     return (
         <RadioGroup value={variant} onChange={setVariant}>
-            <div className="">
-                {variants.map((variant) => (
-                    <RadioGroup.Option
-                        key={variant.id}
-                        value={variant.stripePriceId}
-                        className={({ active, checked }) =>
-                            `${active ? 'selected' : ''}`
-                        }
-                    >
-                        {({ active, checked }) => (
-                            <>
-                                <RadioGroup.Description
-                                    as="span"
-                                    className={subscriptionOptionStyling}
-                                >
-                                    <label style={subscriptionOptionStyling}>
-                                        <div className="pricetag" style={subscriptionPriceTag}>
-                                            <b>€ {variant.price}</b>
-                                            <span> per maand</span>
-                                        </div>
-                                        <div>
-                                            <h4 style={subscriptionTitle}>{variant.description}</h4>
-                                        </div>
-                                        <div style={subscriptionSubTitle}>For todo maxamount </div>
-                                    </label>
-                                </RadioGroup.Description>
-                            </>
-                        )}
-                    </RadioGroup.Option>
-                ))}
-            </div>
+            {variants.map((variant) => (
+                <RadioGroup.Option
+                    key={variant.id}
+                    value={variant}
+                    className={({ active, checked }) =>
+                        `${checked ? 'selected' : ''}`
+                    }
+                >
+                    {({ active, checked }) => (
+                        <>
+                            <RadioGroup.Description
+                                as="span"
+                                className={''}
+                            >
+                                <label style={subscriptionOptionStyling}>
+                                    <div className="pricetag" style={subscriptionPriceTag}>
+                                        <b>€ {variant.price}</b>
+                                        <span> per maand</span>
+                                    </div>
+                                    <div>
+                                        <h4 style={subscriptionTitle}>{variant.description}</h4>
+                                    </div>
+                                    <div style={subscriptionSubTitle}>For todo maxamount </div>
+                                </label>
+                            </RadioGroup.Description>
+                        </>
+                    )}
+                </RadioGroup.Option>
+            ))}
         </RadioGroup>
     )
 }
@@ -111,7 +109,7 @@ export default function PluginInfo() {
             const { data: variantsData } = await axios.get(process.env.REACT_APP_API_BACKEND + `/api/v1/admin/PluginVariant?filter={"pluginId":${pluginId}}`);
             setPlugin(pluginData)
             setVariants(variantsData)
-            setVariant(variantsData[0].stripePriceId)
+            setVariant(variantsData[0])
         }
         fetchData()
     }, [pluginId])
@@ -138,7 +136,7 @@ export default function PluginInfo() {
                 <div className="col">
                     <ProductVariants variants={variants} variant={variant} setVariant={setVariant} />
                     <form action={process.env.REACT_APP_API_BACKEND + "/api/v1/CheckoutApi/create-checkout-session"} method="POST">
-                        <input type="hidden" name="priceId" value={variant} />
+                        <input type="hidden" name="priceId" value={variant.stripePriceId} />
                         <button className="btn btn-oneblinq-roze mt-2 col-12" type="submit">Subscribe</button>
                     </form>
                 </div>
