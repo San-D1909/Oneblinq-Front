@@ -56,7 +56,13 @@ export const PluginList = (props) => (
     <Datagrid expand={<PluginPanel />}>
       <TextField source="pluginName" label="Plugin name" />
       <NumberField
-        source="price"
+        source="monthlyPrice"
+        label="Monthly Price"
+        options={{ style: "currency", currency: "EUR" }}
+      />
+      <NumberField
+        source="fullPrice"
+        label="Full Price"
         options={{ style: "currency", currency: "EUR" }}
       />
       <PluginShowButton {...props} />
@@ -77,7 +83,16 @@ export const PluginCreate = (props) => (
         label="Plugin description"
         validate={required()}
       />
-      <NumberInput source="monthlyPrice" validate={required()} />
+      <NumberInput
+        source="monthlyPrice"
+        label="Monthly Price"
+        validate={required()}
+      />
+      <NumberInput
+        source="fullPrice"
+        label="Full Price"
+        validate={required()}
+      />
     </SimpleForm>
   </Create>
 );
@@ -95,7 +110,16 @@ export const PluginEdit = (props) => (
         label="Plugin description"
         validate={required()}
       />
-      <NumberInput source="monthlyPrice" label="Price" validate={required()} />
+      <NumberInput
+        source="monthlyPrice"
+        label="Monthly Price"
+        validate={required()}
+      />
+      <NumberInput
+        source="fullPrice"
+        label="Full Price"
+        validate={required()}
+      />
     </SimpleForm>
   </Edit>
 );
@@ -121,7 +145,12 @@ export const PluginShow = (props) => {
           />
           <NumberField
             source="monthlyPrice"
-            label="Price"
+            label="Monthly Price"
+            options={{ style: "currency", currency: "EUR" }}
+          />
+          <NumberField
+            source="fullPrice"
+            label="Full Price"
             options={{ style: "currency", currency: "EUR" }}
           />
         </Tab>
