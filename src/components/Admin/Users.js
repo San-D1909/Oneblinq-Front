@@ -51,7 +51,7 @@ export const UserList = (props) => (
     <Datagrid expand={<UserPanel />}>
       <TextField source="id" label="User Id" />
       <TextField source="email" label="User Email" />
-      <TextField source="fullName" label="User Email" />
+      <TextField source="fullName" label="Full Name" />
       <BooleanField source="isVerified" label="Is Verified" />
       <BooleanField source="isAdmin" label="Is Admin" />
       <UserShowButton {...props} />
@@ -70,6 +70,7 @@ export const UserCreate = (props) => (
         label="Password Confirmation"
         validate={required()}
       />
+      <BooleanInput source="isAdmin" label="Is Admin" validate={required()} />
     </SimpleForm>
   </Create>
 );
@@ -79,6 +80,11 @@ export const UserEdit = (props) => (
     <SimpleForm>
       <TextInput source="email" label="Email" validate={required()} />
       <TextInput source="fullName" label="Fullname" validate={required()} />
+      <BooleanInput
+        source="isVerified"
+        label="Is Verified"
+        validate={required()}
+      />
       <BooleanInput source="isAdmin" label="Is Admin" validate={required()} />
     </SimpleForm>
   </Edit>
@@ -93,6 +99,7 @@ export const UserShow = (props) => (
     <SimpleShowLayout>
       <TextField source="email" label="Email" />
       <TextField source="fullName" label="Fullname" />
+      <BooleanField source="isVerified" label="Is Verified" />
       <BooleanField source="isAdmin" label="Is Admin" />
     </SimpleShowLayout>
   </Show>
