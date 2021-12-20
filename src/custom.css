@@ -4,11 +4,11 @@ a {
 }
 
 code {
-  color: #E01A76;
+  color: #e01a76;
 }
 
 body {
-  background-color: #02021E;
+  background-color: #02021e;
 }
 
 .nav-item {
@@ -73,14 +73,15 @@ body {
 */
 
 .btn.btn-outline-pastel {
-    border-color: #efa9ae;
-    color: #efa9ae;
+  border-color: #efa9ae;
+  color: #efa9ae;
 }
 .btn.btn-outline-pastel:hover {
-    border-color: #efa9ae;
-    background-color: #efa9ae;
-    color: #ffffff;
+  border-color: #efa9ae;
+  background-color: #efa9ae;
+  color: #ffffff;
 }
+
 .pricetag:before {
   border: 16px solid transparent;
   content: "";
@@ -88,11 +89,12 @@ body {
   left: 100%;
   margin-left: -16px;
   position: absolute;
-  transform: scaleX(.65);
+  transform: scaleX(0.65);
   top: 0;
   width: 0;
   border-top-color: rgb(238, 238, 238);
 }
+
 .pricetag:after {
   border: 16px solid transparent;
   content: "";
@@ -100,28 +102,24 @@ body {
   left: 100%;
   margin-left: -16px;
   position: absolute;
-  transform: scaleX(.65);
+  transform: scaleX(0.65);
   bottom: 0;
   width: 0;
   border-bottom-color: rgb(238, 238, 238);
 }
 
-.subscriptionoption[aria-selected=true] .pricetag {
+.selected .pricetag {
   background-color: #efa9ae !important;
 }
 
-.subscriptionoption[aria-selected=true] .pricetag:after {
+.selected .pricetag:after {
   border-bottom-color: #efa9ae !important;
 }
 
-.subscriptionoption[aria-selected=true] .pricetag:before {
+.selected .pricetag:before {
   border-top-color: #efa9ae !important;
 }
 
-.subscriptionoption[aria-selected=true] {
+.selected {
   box-shadow: 0 0 0 2px #efa9ae !important;
-}
-
-.subscriptionoption > * {
-  pointer-events: none;
 }
