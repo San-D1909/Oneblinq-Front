@@ -5,6 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import simpleRestProvider from 'ra-data-simple-rest';
 import { LicenseList, LicenseShow } from "./License";
 import { PluginList, PluginShow, PluginEdit, PluginCreate } from "./Plugins";
+import { PluginBundleList, PluginBundleCreate, PluginBundleEdit, PluginBundleShow} from "./PluginBundles"
 import { LicenseTypeCreate, LicenseTypeList, LicenseTypeEdit, LicenseTypeShow } from "./LicenseTypes";
 
 export const newOptions = {
@@ -54,6 +55,7 @@ const AdminDash = () => {
             <Resource name="plugin" list={PluginList} create={PluginCreate} edit={PluginEdit} show={PluginShow} />
             <Resource name="user" list={UserList} create={UserCreate} edit={UserEdit} show={UserShow} />
             <Resource name="licenseType" list={LicenseTypeList} create={LicenseTypeCreate} edit={LicenseTypeEdit} show={LicenseTypeShow} />
+            <Resource name="pluginbundle" list={PluginBundleList} create={PluginBundleCreate} edit={PluginBundleEdit} show={PluginBundleShow} />
         </Admin>
     );
 };
