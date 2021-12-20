@@ -72,14 +72,7 @@ export class NavMenu extends Component {
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavDropdown id="aboutdropdown" title="Plugins" className="basic-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Forms</NavDropdown.Item>
-                </NavDropdown>
-                <NavDropdown id="aboutdropdown" title="About" className="basic-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                    <NavDropdown.Item href="/plugins">Plugin overview</NavDropdown.Item>
                 </NavDropdown>
                 {LoginLogoutButton}
                 <Button variant="outline-light" href="/login">Get Started</Button>

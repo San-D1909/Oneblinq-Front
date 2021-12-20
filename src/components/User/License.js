@@ -50,6 +50,7 @@ export const LicenseShow = (props) => {
                 <TextField source="timesActivated" label="Amount activated" />
                 <DateField source="license.creationTime" label="Created on" />
                 <DateField source="license.expirationTime" label="Expires on" />
+                <DeviceCreateButton {...props}/>
             </Tab>   
 
             <Tab label="Devices" path="device">
