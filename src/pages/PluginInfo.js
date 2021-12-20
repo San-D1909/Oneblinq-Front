@@ -73,7 +73,7 @@ function SubscriptionList(props)  {
             <label data-listnumber={i} onClick={subscriptionClick} key={i} className="subscriptionoption" style={subscriptionOptionStyling} aria-selected={i === 1 ? "false" : "true"}>
                 <div className="pricetag" style={subscriptionPriceTag}>
                     <b>€ {priceDecimals}</b>
-                    <span> een maand</span>
+                    <span> per maand</span>
                 </div>
                 <div>
                     <h4 style={subscriptionTitle}>{licenseType.typeName}</h4>
