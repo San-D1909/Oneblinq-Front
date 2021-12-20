@@ -32,24 +32,29 @@ export const PluginBundleCreate = (props) => (
     <Create {...props}>
         <SimpleForm>
             <TextInput source="bundleName" label="Plugin name" validate={required()} />
-            <RichTextInput source="bundleDescription" label="Plugin description" validate={required()} />
+            <RichTextInput source="bundleDescription" label="Bundle description" validate={required()} />
             <NumberInput source="price" validate={required()} />
-            {/*<ReferenceArrayInput label="plugins" source="id" reference="plugin">*/}
-            {/*    <SelectArrayInput optionTitle="pluginName" />*/}
-            {/*</ReferenceArrayInput>*/}
+            <ReferenceArrayInput label="plugin" reference="plugin" source="pluginIds">
+                <SelectArrayInput optionText="pluginName" validate={required()}/>
+            </ReferenceArrayInput>
         </SimpleForm>
     </Create>
 );
 
-export const PluginBundleEdit = (props) => (
-    <Edit {...props}>
-        <SimpleForm>
-            <TextInput source="bundleName" label="Plugin name" validate={required()} />
-            <RichTextInput source="bundleDescription" label="Plugin description" validate={required()} />
-            <NumberInput source="price" label="Price" validate={required()} />
-        </SimpleForm>
-    </Edit>
-);
+export const PluginBundleEdit = (props) => {
+    return (
+        <Edit {...props}>
+            <SimpleForm>
+                <TextInput source="bundleName" label="Plugin name" validate={required()} />
+                <RichTextInput source="bundleDescription" label="Bundle description" validate={required()} />
+                <NumberInput source="price" label="Price" validate={required()} />
+                <ReferenceArrayInput label="plugin" reference="plugin" source="plugins">
+                    <SelectArrayInput optionText="pluginName" validate={required()}/>
+                </ReferenceArrayInput>
+            </SimpleForm>
+        </Edit>
+    );
+}
 
 const PluginBundleShowButton = ({ record }) => {
     return (
@@ -72,23 +77,31 @@ export const PluginBundleShow = (props) => {
         <Show {...props}>
             <TabbedShowLayout>
                 <Tab label="Summary">
-                    <TextField source="bundleName" label="Plugin name" />
-                    <RichTextField source="bundleDescription" label="Plugin description" />
+                    <TextField source="bundleName" label="Bundle name" />
+                    <RichTextField source="bundleDescription" label="Bundle description" />
                     <NumberField source="price" label="Price" />
                 </Tab>
-                {/*<Tab label="Used By" path="user">*/}
-                {/*    <ArrayField className="col-12" source="users" label="">*/}
-                {/*        <Datagrid className="col-12">*/}
-                {/*            <TextField source="id" />*/}
-                {/*            <EmailField source="email" />*/}
-                {/*            <BooleanField source="isVerified" label="Verified" />*/}
-                {/*            <TextField source="company.companyName" label="Company name" />*/}
-                {/*            <TextField source="company.phoneNumber" label="Phonenumber" />*/}
-                {/*            <TextField source="company.bTWNumber" label="BTW number" />*/}
-                {/*            <TextField source="company.kVKNumber" label="KVK number" />*/}
-                {/*        </Datagrid>*/}
-                {/*    </ArrayField>*/}
-                {/*</Tab>*/}
+                <Tab label="Used By" path="user">
+                    <ArrayField className="col-12" source="users" label="">
+                        <Datagrid className="col-12">
+                            <TextField source="id" />
+                            <EmailField source="email" />
+                            <BooleanField source="isVerified" label="Verified" />
+                            <TextField source="company.companyName" label="Company name" />
+                            <TextField source="company.phoneNumber" label="Phonenumber" />
+                            <TextField source="company.bTWNumber" label="BTW number" />
+                            <TextField source="company.kVKNumber" label="KVK number" />
+                        </Datagrid>
+                    </ArrayField>
+                </Tab>
+                <Tab label="Plugins" path="plugin">
+                    <ArrayField className="col-12" source="plugins" label="">
+                        <Datagrid className="col-12">
+                            <TextField source="id" />
+                            <TextField source="pluginName" />
+                        </Datagrid>
+                    </ArrayField>
+                </Tab>
             </TabbedShowLayout>
         </Show>
     );
