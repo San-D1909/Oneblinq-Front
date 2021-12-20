@@ -77,7 +77,7 @@ export const PluginCreate = (props) => (
         label="Plugin description"
         validate={required()}
       />
-      <NumberInput source="price" validate={required()} />
+      <NumberInput source="monthlyPrice" validate={required()} />
     </SimpleForm>
   </Create>
 );
@@ -95,7 +95,7 @@ export const PluginEdit = (props) => (
         label="Plugin description"
         validate={required()}
       />
-      <NumberInput source="price" label="Price" validate={required()} />
+      <NumberInput source="monthlyPrice" label="Price" validate={required()} />
     </SimpleForm>
   </Edit>
 );
@@ -119,7 +119,11 @@ export const PluginShow = (props) => {
             source="pluginDescription"
             label="Plugin description"
           />
-          <NumberField source="price" label="Price" />
+          <NumberField
+            source="monthlyPrice"
+            label="Price"
+            options={{ style: "currency", currency: "EUR" }}
+          />
         </Tab>
         <Tab label="Used By" path="user">
           <ArrayField className="col-12" source="users" label="">
