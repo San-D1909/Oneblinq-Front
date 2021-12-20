@@ -16,7 +16,17 @@ import {
   LicenseTypeEdit,
   LicenseTypeShow,
 } from "./LicenseTypes";
-import { PluginBundleList, PluginBundleCreate, PluginBundleEdit, PluginBundleShow} from "./PluginBundles"
+import {
+  PluginBundleList,
+  PluginBundleCreate,
+  PluginBundleEdit,
+  PluginBundleShow,
+} from "./PluginBundles";
+import PeopleIcon from "@material-ui/icons/People";
+import SettingsInputHdmiIcon from "@material-ui/icons/SettingsInputHdmi";
+import AccountTree from "@material-ui/icons/AccountTree";
+import ViewModuleIcon from "@material-ui/icons/ViewModule";
+import SettingsInputComponent from "@material-ui/icons/SettingsInputComponent";
 
 export const newOptions = {
   palette: {
@@ -67,6 +77,7 @@ const AdminDash = () => {
         list={LicenseList}
         show={LicenseShow}
         edit={LicenseEdit}
+        icon={AccountTree}
       />
       <Resource
         name="plugin"
@@ -74,6 +85,7 @@ const AdminDash = () => {
         create={PluginCreate}
         edit={PluginEdit}
         show={PluginShow}
+        icon={SettingsInputHdmiIcon}
       />
       <Resource
         name="user"
@@ -81,6 +93,7 @@ const AdminDash = () => {
         create={UserCreate}
         edit={UserEdit}
         show={UserShow}
+        icon={PeopleIcon}
       />
       <Resource
         name="licenseType"
@@ -88,8 +101,17 @@ const AdminDash = () => {
         create={LicenseTypeCreate}
         edit={LicenseTypeEdit}
         show={LicenseTypeShow}
+        icon={SettingsInputComponent}
       />
-            <Resource name="pluginbundle" list={PluginBundleList} create={PluginBundleCreate} edit={PluginBundleEdit} show={PluginBundleShow} />
+
+      <Resource
+        name="pluginbundle"
+        list={PluginBundleList}
+        create={PluginBundleCreate}
+        edit={PluginBundleEdit}
+        show={PluginBundleShow}
+        icon={ViewModuleIcon}
+      />
     </Admin>
   );
 };

@@ -27,7 +27,6 @@ export class Login extends Component {
             hasError: false,
             errorMessage: '',
             loggedIn: false,
-            token: null
         }
         this.handleLogin = this.handleLogin.bind(this)
     }
@@ -121,7 +120,6 @@ export class Login extends Component {
                                     <div className="forgot-password">
                                         <Link className="m-2 passwordlink" to="/forgotpassword">Forgot your password?</Link>
                                     </div>
-
                                 </div>
                             </CardBody>
                         </Card>
