@@ -27,6 +27,7 @@ import SettingsInputHdmiIcon from "@material-ui/icons/SettingsInputHdmi";
 import AccountTree from "@material-ui/icons/AccountTree";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import SettingsInputComponent from "@material-ui/icons/SettingsInputComponent";
+import { AppBar } from "react-admin";
 
 export const newOptions = {
   palette: {
@@ -73,11 +74,12 @@ const AdminDash = () => {
       )}
     >
       <Resource
-        name="license"
-        list={LicenseList}
-        show={LicenseShow}
-        edit={LicenseEdit}
-        icon={AccountTree}
+        name="user"
+        list={UserList}
+        create={UserCreate}
+        edit={UserEdit}
+        show={UserShow}
+        icon={PeopleIcon}
       />
       <Resource
         name="plugin"
@@ -88,12 +90,19 @@ const AdminDash = () => {
         icon={SettingsInputHdmiIcon}
       />
       <Resource
-        name="user"
-        list={UserList}
-        create={UserCreate}
-        edit={UserEdit}
-        show={UserShow}
-        icon={PeopleIcon}
+        name="pluginbundle"
+        list={PluginBundleList}
+        create={PluginBundleCreate}
+        edit={PluginBundleEdit}
+        show={PluginBundleShow}
+        icon={ViewModuleIcon}
+      />
+      <Resource
+        name="license"
+        list={LicenseList}
+        show={LicenseShow}
+        edit={LicenseEdit}
+        icon={AccountTree}
       />
       <Resource
         name="licenseType"
@@ -102,15 +111,6 @@ const AdminDash = () => {
         edit={LicenseTypeEdit}
         show={LicenseTypeShow}
         icon={SettingsInputComponent}
-      />
-
-      <Resource
-        name="pluginbundle"
-        list={PluginBundleList}
-        create={PluginBundleCreate}
-        edit={PluginBundleEdit}
-        show={PluginBundleShow}
-        icon={ViewModuleIcon}
       />
     </Admin>
   );
