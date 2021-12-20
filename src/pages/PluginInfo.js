@@ -1,14 +1,14 @@
-﻿import React, {Component, useState} from 'react';
 import Card from 'reactstrap/lib/Card';
 import CardBody from 'reactstrap/lib/CardBody';
 import CardImg from 'reactstrap/lib/CardImg';
 import { NavMenu } from '../components/NavMenu';
 import { Footer } from '../components/Footer';
 import axios from 'axios';
+import { useState, useEffect } from 'react'
+import { RadioGroup } from '@headlessui/react'
 
-const buttonFontSize = {
-    fontSize: '1.5rem'
-};
+import React from 'react'
+import { useParams } from 'react-router-dom';
 
 const textStyling = {
     color: 'white'
@@ -20,152 +20,131 @@ const hrStyling = {
     color: "#edeffc"
 };
 
-const SubscribeButtonStyle = {
-    background: "#36a9ae linear-gradient(to bottom, #37adb2, #329ca0) !important",
-    border: "1px solid #2a8387 !important"
+const subscriptionOptionStyling = {
+    width: '100%',
+    background: "#fff",
+    border: "1px solid #ddd",
+    borderRadius: "0",
+    boxSizing: "border-box",
+    color: "#252a2e",
+    cursor: "pointer",
+    display: "block",
+    fontSize: "17px",
+    marginTop: "10px",
+    overflow: "hidden",
+    padding: "15px",
+    textDecoration: "none",
+    transition: "all .05s ease-in-out",
 }
 
-function SubscriptionList(props)  {
+const subscriptionPriceTag = {
+    background: "#eee",
+    display: "inline-block",
+    fontSize: "13px",
+    fontWeight: 700,
+    marginBottom: "10px",
+    padding: "6px 10px",
+    pointerEvents: "none",
+    position: "relative"
+}
 
-    const subscriptionOptionStyling = {
-        background: "#fff",
-        border: "1px solid #ddd",
-        borderRadius: "4px",
-        boxSizing: "border-box",
-        color: "#252a2e",
-        cursor: "pointer",
-        display: "block",
-        fontSize: "17px",
-        marginTop: "10px",
-        overflow: "hidden",
-        padding: "15px",
-        textDecoration: "none",
-        transition: "all .05s ease-in-out"
-    }
+const subscriptionTitle = {
+    fontWeight: 700
+}
 
-    const subscriptionPriceTag = {
-        background: "#eee",
-        display: "inline-block",
-        fontSize: "13px",
-        fontWeight: 700,
-        marginBottom: "10px",
-        padding: "6px 10px",
-        pointerEvents: "none",
-        position: "relative"
-    }
+const subscriptionSubTitle = {
+    color: "#797874",
+    fontSize: "15px",
+    marginTop: "10px"
+}
 
-    const subscriptionTitle = {
-        fontWeight: 700
-    }
-
-    const subscriptionSubTitle = {
-        color: "#797874",
-        fontSize: "15px",
-        marginTop: "10px"
-    }
-
-    const { licenseTypes, plugin, subscriptionClick, subscribeSubscription } = props;
-
-
-    const listItems = licenseTypes.map((licenseType, i) => {
-        let priceDecimals = parseFloat(plugin.monthlyPrice * licenseType.maxAmount).toFixed(2);
-        return (
-            <label data-listnumber={i} onClick={subscriptionClick} key={i} className="subscriptionoption" style={subscriptionOptionStyling} aria-selected={i === 1 ? "false" : "true"}>
-                <div className="pricetag" style={subscriptionPriceTag}>
-                    <b>€ {priceDecimals}</b>
-                    <span> per maand</span>
-                </div>
-                <div>
-                    <h4 style={subscriptionTitle}>{licenseType.typeName}</h4>
-                </div>
-                <div style={subscriptionSubTitle}>For {licenseType.maxAmount === 1 ? "a single" : licenseType.maxAmount } Figma user</div>
-            </label>
-        );
-    });
+function ProductVariants({ variant, setVariant, variants }) {
     return (
-        <div className="col-md-4 col-12">
-            {listItems}
-            <button onClick={subscribeSubscription} className="btn btn-oneblinq-roze mt-2 col-12" style={SubscribeButtonStyle}>Subscribe</button>
-        </div>
+        <RadioGroup value={variant} onChange={setVariant}>
+            {variants.map((variant) => (
+                <RadioGroup.Option
+                    key={variant.id}
+                    value={variant}
+                    className={({ active, checked }) =>
+                        `${checked ? 'selected' : ''}`
+                    }
+                >
+                    {({ active, checked }) => (
+                        <>
+                            <RadioGroup.Description
+                                as="span"
+                                className={''}
+                            >
+                                <label style={subscriptionOptionStyling}>
+                                    <div className="pricetag" style={subscriptionPriceTag}>
+                                        <b>€ {variant.price}</b>
+                                        <span> per maand</span>
+                                    </div>
+                                    <div>
+                                        <h4 style={subscriptionTitle}>{variant.description}</h4>
+                                    </div>
+                                    <div style={subscriptionSubTitle}>For todo maxamount </div>
+                                </label>
+                            </RadioGroup.Description>
+                        </>
+                    )}
+                </RadioGroup.Option>
+            ))}
+        </RadioGroup>
     )
 }
 
-export default class PluginInfo extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            licenseTypes: [],
-            plugin: {
-                Id: 0,
-                pluginName: "Loading",
-                pluginDescription: "Loading",
-                price: "Loading"
-            },
-            selectedSubscription: {},
-            pluginId: props.match.params.pluginId
+export default function PluginInfo() {
+    const { pluginId } = useParams();
+
+    const [plugin, setPlugin] = useState({})
+
+
+    const [variants, setVariants] = useState([])
+    const [variant, setVariant] = useState("")
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data: pluginData } = await axios.get(process.env.REACT_APP_API_BACKEND + '/api/v1/Plugin/' + pluginId)
+            const { data: variantsData } = await axios.get(process.env.REACT_APP_API_BACKEND + `/api/v1/admin/PluginVariant?filter={"pluginId":${pluginId}}`);
+            setPlugin(pluginData)
+            setVariants(variantsData)
+            setVariant(variantsData[0])
         }
-        // this.fetchLicenseTypes = this.fetchLicenseTypes.bind(this);
-        // this.fetchPluginById = this.fetchPluginById.bind(this);
-    }
+        fetchData()
+    }, [pluginId])
 
-    async componentDidMount() {
-        await axios.get(process.env.REACT_APP_API_BACKEND + '/api/v1/LicenseType').then(response => {
-            console.log(response);
-            return response.data;
-        }).then(data  => {
-            this.setState({licenseTypes: data, selectedSubscription: data[0]});
-        });
-        await axios.get(process.env.REACT_APP_API_BACKEND + '/api/v1/Plugin/' + this.state.pluginId).then(response => {
-            console.log(response.data);
-            this.setState({ pluginId: response.data.id })
-            return response.data;
-        }).then(data => this.setState({plugin: data}));
-    }
+    return (
+        <>
+            <NavMenu />
+            <div className="row p-0 mx-auto container">
 
-    selectSubscription = async (e) => {
-        let elements = document.getElementsByClassName("subscriptionoption");
-        for(let i = 0; elements.length > i; i++) {
-            if (elements[i].attributes.getNamedItem("aria-selected")) {
-                elements[i].attributes.removeNamedItem("aria-selected");
-            }
-        }
+                <h1 className="row m-0" style={{ color: '#edeffc' }} >{plugin.pluginName}</h1>
+                <hr style={hrStyling} className="container" />
 
-        let selectedNumber = e.target.dataset.listnumber;
-        elements[parseInt(selectedNumber)].setAttribute("aria-selected", true);
-        this.setState({selectedSubscription: this.state.licenseTypes[selectedNumber]});
-    }
+                <div className="col-md-8 p-1 col-12">
 
-    subscribeSubscription = (e) => {
-        console.log(this.state);
-    }
+                    <Card className="order-last">
+                        <CardBody className="p-0">
+                            <CardImg className="" src="https:www.figma.com/community/plugin/980021361387673169/thumbnail" />
 
-    render() {
-        return (
-            <>
-                <NavMenu />
-                <div className="row p-0 mx-auto logincontainer">
-
-                    <h1 className="row m-0" style={{ color: '#edeffc' }} >{this.state.plugin.pluginName}</h1>
-                    <hr style={hrStyling} className="container" />
-
-                    <div className="col-md-8 p-1 col-12">
-
-                        <Card className="order-last">
-                            <CardBody className="p-0">
-                                <CardImg className="" src="https://www.figma.com/community/plugin/980021361387673169/thumbnail" />
-
-                            </CardBody>
-                        </Card>
-                        <div className="p-1" style={textStyling} dangerouslySetInnerHTML={{ __html: this.state.plugin.pluginDescription }} />
-                    </div>
-                    <SubscriptionList subscriptionClick={this.selectSubscription} subscribeSubscription={this.subscribeSubscription} plugin={this.state.plugin} licenseTypes={this.state.licenseTypes} />
-                    {/*<div className="btnholder">*/}
-                    {/*    <PluginBuyButton />*/}
-                    {/*    <Button style={buttonFontSize} className="m-1 px-4 py-3" variant="outline-light" href="">Add to wishlist</Button>*/}
-                    {/*</div>*/}
+                        </CardBody>
+                    </Card>
+                    <div className="p-1" style={textStyling} dangerouslySetInnerHTML={{ __html: plugin.pluginDescription }} />
                 </div>
-                <Footer />
-            </>
-        );
-    }
+                <div className="col">
+                    <ProductVariants variants={variants} variant={variant} setVariant={setVariant} />
+                    <form action={process.env.REACT_APP_API_BACKEND + "/api/v1/CheckoutApi/create-checkout-session"} method="POST">
+                        <input type="hidden" name="priceId" value={variant.stripePriceId} />
+                        {/* TODO: auto add email when user is authenticated */}
+                        {/* {authenticated?? 
+                            <input type="hidden" name="email" value={authenticated.user.email} />
+                        } */}
+                        <button className="btn btn-oneblinq-roze mt-2 col-12" type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <Footer />
+        </>
+    )
 }
