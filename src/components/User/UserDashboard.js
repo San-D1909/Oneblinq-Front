@@ -4,7 +4,6 @@ import { PluginCreate, PluginEdit, PluginList, PluginShow } from "../User/Plugin
 import { LicenseList, LicenseShow } from "../User/License";
 import simpleRestProvider from 'ra-data-simple-rest';
 import React, { forwardRef } from 'react';
-import {DeviceList, DeviceShow, DeviceCreate} from "./Devices";
 
 export const newOptions = {
     palette: {
@@ -54,11 +53,6 @@ const UserDashboard = () => {
                 show={LicenseShow}
             />
             <Resource name="plugin" list={PluginList} show={PluginShow} />
-            <Resource name="device" 
-                list={DeviceList} 
-                show={DeviceShow} 
-                create={DeviceCreate}
-            />
         </Admin>
     );
 }

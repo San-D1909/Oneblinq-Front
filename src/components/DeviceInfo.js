@@ -1,15 +1,18 @@
 import platform from 'platform';
 
-function OSInfo(){
+export const OSInfo = () => {
     return platform.os.toString()
 }
 
-function BrowserInfo(){
+export const BrowserInfo = () => {
     return platform.name.toString() + platform.version.toString();
 }
 
-function UAInfo(){
+export const UAInfo = () => {
     return navigator.userAgent;
 }
 
-export {OSInfo, BrowserInfo, UAInfo}
+export const FullInfo = () => {
+    return OSInfo + BrowserInfo + UAInfo;
+}
+
