@@ -8,6 +8,7 @@ import "./CSS/SearchBox.css";
 
 function PluginList(props) {
     const { plugins } = props
+    console.log(plugins)
     const listItems = plugins.map((plugin, i) =>
         <div key={i} className="col-12 col-lg-4 col-md-6 py-3">
             <PluginCard data={plugin} />
@@ -18,34 +19,6 @@ function PluginList(props) {
             {listItems}
         </div>
     )
-}
-
-function BundleCard(props) {
-    const bundleCardTitleStyle = {
-        backgroundColor: "#deeff4",
-        color: "#02021E"
-    }
-    const textStyle = {
-        color: "inherit"
-    }
-    const textDecoNone = {
-        textDecoration: "none"
-    }
-    const { bundle } = props
-    return (
-        <a style={textDecoNone} className="card plugin" href={ "/plugins/"+bundle.id }>
-            <div className="card-body">
-                <img src="https://via.placeholder.com/344x216.png" alt={bundle.title} />
-            </div>
-            <div style={bundleCardTitleStyle} className="card-footer">
-                <span style={textStyle}>{bundle.title}</span>
-                <span style={textStyle} className="float-end">
-                    <span style={textStyle}><i className="far fa-sm fa-comment"></i> 123</span>
-                    <span style={textStyle} className="pl-2"><i className="fas fa-sm fa-arrow-down"></i> 1.7k</span>
-                </span>
-            </div>
-        </a >
-     )
 }
 
 function PluginBundleList(props) {
@@ -62,6 +35,35 @@ function PluginBundleList(props) {
         </div>
     )
 }
+function BundleCard(props) {
+const bundleCardTitleStyle = {
+    backgroundColor: "#deeff4",
+    color: "#02021E"
+}
+const textStyle = {
+    color: "inherit"
+}
+const textDecoNone = {
+    textDecoration: "none"
+}
+const { bundle } = props
+return (
+    <a style={textDecoNone} className="card plugin" href={ "/Bundle/"+bundle.id }>
+        <div className="card-body">
+            <img src="https://via.placeholder.com/344x216.png" alt={bundle.bundleName} />
+        </div>
+        <div style={bundleCardTitleStyle} className="card-footer">
+            <span style={textStyle}>{bundle.bundleName}</span>
+            <span style={textStyle} className="float-end">
+                    <span style={textStyle}><i className="far fa-sm fa-comment"></i>10</span>
+                <span style={textStyle}>$ {bundle.price}</span>
+                    <span style={textStyle} className="pl-2"><i className="fas fa-sm fa-arrow-down"></i> 1.7k</span>
+                </span>
+        </div>
+    </a >
+);
+}
+
 
 
 export class Plugins extends Component {
@@ -82,19 +84,11 @@ export class Plugins extends Component {
     }
 
     async componentDidMount() {
-        this.setState({ plugins: await this.fetchPlugins(), bundles: this.fetchBundles(), hover: false})
+        this.setState({ plugins: await this.fetchPlugins(), bundles: await this.fetchBundles(), hover: false})
     }
 
-    fetchBundles() {
-        return [{
-            id: 1,
-            title: "figma-bundle",
-            plugins: [{
-                id: 1,
-                title: "forms",
-                price: 5.00
-            }]
-        }]
+    async fetchBundles() {
+        return await axios.get(process.env.REACT_APP_API_BACKEND + '/api/v1/PluginBundle').then(response => response.data)
     }
 
     async fetchPlugins() {
@@ -169,7 +163,7 @@ export class Plugins extends Component {
                 <h1 className="row m-0 justify-content-center" style={{ color: '#edeffc' }} >Plugin Bundles</h1>
                 <div className="search-box" style={{margin:'auto',padding: '10px'}}>
                     <button className="btn-search"><i className="fas fa-search"></i></button>
-                    <input type="text" className="input-search1" placeholder="Type to Search..."
+                    <input type="text" style={{color: '#FFAFAF'}} className="input-search" placeholder="Type to Search..."
                            onChange={(e) => this.GetBundleSearchResults(e)}></input>
                 </div>
                 <hr style={this.hrStyling} className="container" />
@@ -178,8 +172,8 @@ export class Plugins extends Component {
                 </div>
                 <h1 className="row m-0 justify-content-center" style={{ color: '#edeffc' }} >Plugins</h1>
                 <div className="search-box" style={{margin:'auto',padding: '10px'}}>
-                    <button className="btn-search"><i className="fas fa-search"></i></button>
-                    <input type="text" className="input-search2" placeholder="Type to Search..."
+                    <button style={{ color: '#ffffff' }} className="btn-search"><i className="fas fa-search"></i></button>
+                    <input type="text" className="input-search" style={{background: '#FFAFAF'}} placeholder="Type to Search..."
                            onChange={(e) => this.GetPluginSearchResults(e)}></input>
                 </div>
                 <hr style={this.hrStyling} className="container"  />
