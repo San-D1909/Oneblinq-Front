@@ -131,12 +131,15 @@ export default function PluginInfo() {
                         </CardBody>
                     </Card>
                     <div className="p-1" style={textStyling} dangerouslySetInnerHTML={{ __html: plugin.pluginDescription }} />
-                    {plugin.pluginDescription}
                 </div>
                 <div className="col">
                     <ProductVariants variants={variants} variant={variant} setVariant={setVariant} />
                     <form action={process.env.REACT_APP_API_BACKEND + "/api/v1/CheckoutApi/create-checkout-session"} method="POST">
                         <input type="hidden" name="priceId" value={variant.stripePriceId} />
+                        {/* TODO: auto add email when user is authenticated */}
+                        {/* {authenticated?? 
+                            <input type="hidden" name="email" value={authenticated.user.email} />
+                        } */}
                         <button className="btn btn-oneblinq-roze mt-2 col-12" type="submit">Subscribe</button>
                     </form>
                 </div>
