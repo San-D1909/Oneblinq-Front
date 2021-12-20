@@ -16,6 +16,7 @@ import {
   LicenseTypeEdit,
   LicenseTypeShow,
 } from "./LicenseTypes";
+import { PluginBundleList, PluginBundleCreate, PluginBundleEdit, PluginBundleShow} from "./PluginBundles"
 
 export const newOptions = {
   palette: {
@@ -88,6 +89,7 @@ const AdminDash = () => {
         edit={LicenseTypeEdit}
         show={LicenseTypeShow}
       />
+            <Resource name="pluginbundle" list={PluginBundleList} create={PluginBundleCreate} edit={PluginBundleEdit} show={PluginBundleShow} />
     </Admin>
   );
 };
