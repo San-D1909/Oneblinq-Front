@@ -57,6 +57,7 @@ export const LicenseShow = (props) => {
                 <ArrayField className="col-12" source="devices" label="Test">
                             <Datagrid className="col-12">
                                 <TextField source="id" />
+                                <TextField source="deviceName" />
                                 <DeviceDeleteButton {...props}/>
                             </Datagrid>
                 </ArrayField>

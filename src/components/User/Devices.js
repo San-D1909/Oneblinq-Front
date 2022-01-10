@@ -38,7 +38,8 @@ const RegisterDevice = (props) =>
     var data = {}
 
     data.jtoken = localStorage.getItem("token")
-    data.deviceInfo = platform.os.toString() + " " + platform.name.toString() + " " + platform.version.toString() + " " + navigator.userAgent;
+    data.deviceInfo = platform.os.toString() + " " + platform.name.toString() + " " + platform.version.toString() + " " + navigator.userAgent
+    data.deviceName = platform.name.toString() + " " + platform.os.toString()
     data.licenseKey = props.record.license.licenseKey
     
     axios({
