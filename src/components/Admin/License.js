@@ -8,9 +8,8 @@ import {
     BooleanField,
     Show,
     SimpleShowLayout,
-    NumberField,
     ShowButton,
-    BooleanInput, ArrayField
+    BooleanInput
 } from "react-admin";
 import {
   Edit,
@@ -19,10 +18,11 @@ import {
   required,
 } from "react-admin";
 
-// const LicenseFilters = [
-//     <TextInput label="Licensekey" source="licenseKey"/>,
-//     <TextInput label="License name" source="license.typeName"/>,
-// ];
+const LicenseFilters = [
+    <TextInput label="Licensekey" source="license.licenseKey"/>,
+    <TextInput label="License name" source="license.typeName"/>,
+    <TextInput label="Plugin name" source="plugin.pluginName" />,
+];
 
 // const LicensePanel = ({ id, record, resource }) => {
 //     console.log(record);
@@ -51,7 +51,7 @@ import {
 // }
 
 export const LicenseList = (props) => (
-  <List {...props}>
+  <List {...props} filters={LicenseFilters}>
     <Datagrid>
       <TextField source="licenseKey" label="License key" />
       <TextField source="licenseType.typeName" label="License Type" />

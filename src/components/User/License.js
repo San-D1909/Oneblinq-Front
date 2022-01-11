@@ -1,12 +1,16 @@
 // in src/posts.js
 import * as React from "react";
-import { List, Datagrid, TextField, DateField, Show, ShowButton, TabbedShowLayout, Tab, ArrayField } from 'react-admin';
+import { List, Datagrid, TextField, DateField, Show, ShowButton, TabbedShowLayout, Tab, ArrayField, TextInput } from 'react-admin';
 import { DeleteWithConfirmButton} from 'react-admin';
 import { DeviceCreateButton } from "./Devices";
 
+const LicenseFilters = [
+    <TextInput label="Plugin name" source="plugin.pluginName" />,
+    <TextInput label="License" source="license.licenseKey" />,
+];
 
 export const LicenseList = (props) => (
-    <List {...props}>
+    <List {...props}  filters={LicenseFilters}>
         <Datagrid>
             <TextField source="license.licenseKey" label="License key"/>
             <TextField source="plugin.pluginName" label="Plugin name" />
