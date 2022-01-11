@@ -15,6 +15,7 @@ import { ResetPassword } from "./pages/ResetPassword";
 import UserDashboard from "./components/User/UserDashboard";
 import { UserInfo } from "./pages/UserInfo";
 import VerifyEmail from "./pages/VerifyEmail";
+import Order from "./pages/Order";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -40,6 +41,7 @@ export default class App extends Component {
         <Route exact path="/forgotpassword" component={ForgotPassword} />
         <Route path="/verify/:token" component={VerifyEmail} />
         <Route exact path="/UserInfo" component={UserInfo} />
+        <Route path="/order" component={Order} />
       </Layout>
     );
   }
