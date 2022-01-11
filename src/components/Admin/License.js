@@ -32,8 +32,9 @@ import {
 import RichTextInput from "ra-input-rich-text";
 
 const LicenseFilters = [
-    <TextInput label="Licensekey" source="licenseKey"/>,
+    <TextInput label="Licensekey" source="license.licenseKey"/>,
     <TextInput label="License name" source="license.typeName"/>,
+    <TextInput label="Plugin name" source="plugin.pluginName" />,
 ];
 
 const LicensePanel = ({ id, record, resource }) => {
@@ -63,7 +64,7 @@ const LicensePanel = ({ id, record, resource }) => {
 }
 
 export const LicenseList = (props) => (
-  <List {...props}>
+  <List {...props} filters={LicenseFilters}>
     <Datagrid>
       <TextField source="licenseKey" label="License key" />
       <TextField source="licenseType.typeName" label="License Type" />

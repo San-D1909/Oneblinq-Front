@@ -3,6 +3,7 @@ import { Admin, Resource, ListGuesser, EditGuesser } from "react-admin";
 import { UserFilters, UserList, UserShow, UserEdit, UserCreate } from "./Users";
 import { Link, Redirect } from "react-router-dom";
 import simpleRestProvider from "ra-data-simple-rest";
+import {DataProvider} from "ra-core";
 import {
   LicenseList,
   LicenseShow,
@@ -58,7 +59,77 @@ export const newOptions = {
   },
 };
 
+const convertFileToBase64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file.rawFile);
+
+  reader.onload = () => resolve(reader.result);
+  reader.onerror = reject;
+});
+
+const addUploadFeature = requestHandler => (type, resource, params) => {
+  if (type === 'CREATE' && resource === 'plugin') {
+    console.log(resource);
+    console.log(params);
+    // notice that following condition can be true only when `<ImageInput source="pictures" />` component has parameter `multiple={true}`
+    // if parameter `multiple` is false, then data.pictures is not an array, but single object
+    if (params.data.image) {
+      return convertFileToBase64(params.data.image).then(base64Picture => {
+        let requestParams = params.data;
+        params.data.encodedFileContent = base64Picture;
+        params.data.fileName = params.data.image.title;
+
+        return requestHandler.create(resource, {
+          ...params
+        })
+      });
+    }
+    // if (params.data.image && params.data.image.length) {
+    //   // only freshly dropped pictures are instance of File
+    //   const formerPictures = params.data.pictures.filter(p => !(p.rawFile instanceof File));
+    //   const newPictures = params.data.pictures.filter(p => p.rawFile instanceof File);
+    //
+    //   return Promise.all(newPictures.map(convertFileToBase64))
+    //       .then(base64Pictures => base64Pictures.map((picture64, index) => ({
+    //         src: picture64,
+    //         title: `${newPictures[index].title}`,
+    //       })))
+    //       .then(transformedNewPictures => requestHandler(type, resource, {
+    //         ...params,
+    //         data: {
+    //           ...params.data,
+    //           pictures: [...transformedNewPictures, ...formerPictures],
+    //         },
+    //       }));
+    // }
+  } else {
+    switch (type) {
+      default:
+      case "GET_LIST":
+        return requestHandler.getList(resource, params);
+      case "DELETE":
+        return requestHandler.delete(resource, params);
+      case "DELETE_MANY":
+        return requestHandler.deleteMany(resource, params);
+      case "GET_MANY":
+        return requestHandler.getMany(resource, params);
+      case "GET_MANY_REFERENCE":
+        return requestHandler.getManyReference(resource, params);
+      case "GET_ONE":
+        return requestHandler.getOne(resource, params);
+      case "UPDATE":
+        return requestHandler.update(resource, params);
+      case "CREATE":
+        return requestHandler.create(resource, params);
+      case "UPDATE_MANY":
+        return requestHandler.updateMany(resource, params);
+    }
+  }
+};
+
 const AdminDash = () => {
+  let dataProvider = simpleRestProvider(process.env.REACT_APP_API_BACKEND + "/api/v1/admin");
+  dataProvider = addUploadFeature(dataProvider);
   if (localStorage.getItem("token") === null) {
     return <Redirect to="/" />;
   }
@@ -70,9 +141,7 @@ const AdminDash = () => {
   return (
     <Admin
       theme={newOptions}
-      dataProvider={simpleRestProvider(
-        process.env.REACT_APP_API_BACKEND + "/api/v1/admin"
-      )}
+      dataProvider={dataProvider}
     >
       <Resource
         name="user"

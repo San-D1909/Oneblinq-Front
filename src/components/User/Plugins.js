@@ -30,7 +30,7 @@ import {
 import RichTextInput from "ra-input-rich-text";
 
 const PluginFilters = [
-  <TextInput label="Plugin name" source="pluginName" />,
+  <TextInput label="Plugin name" source="plugin.pluginName" />,
   <TextInput label="Plugin description" source="pluginDescription" />,
 ];
 

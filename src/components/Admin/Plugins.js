@@ -85,6 +85,9 @@ export const PluginCreate = (props) => (
         label="Full Price"
         validate={required()}
       />
+      <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>}>
+        <ImageField source="src" title="title" />
+      </ImageInput>
     </SimpleForm>
   </Create>
 );
@@ -162,6 +165,7 @@ export const PluginShow = (props) => {
             label="Full Price"
             options={{ style: "currency", currency: "EUR" }}
           />
+          <ImageField source="image.imageData" title="title" label="Image"/>
         </Tab>
         <Tab label="Used By" path="user">
           <ArrayField className="col-12" source="users" label="">
