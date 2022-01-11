@@ -1,5 +1,4 @@
-import React, { Component, useEffect } from 'react';
-import ReactSession from 'react-client-session/dist/ReactSession';
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 export class Logout extends Component {
@@ -7,7 +6,7 @@ export class Logout extends Component {
 
     render() {
 
-        if (localStorage.getItem("loggedin")) {
+        if (localStorage.getItem("token")) {
             localStorage.clear()
 
             return (

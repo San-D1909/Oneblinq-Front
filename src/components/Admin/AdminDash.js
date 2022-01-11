@@ -1,13 +1,12 @@
 ﻿import * as React from "react";
-import { Admin, Resource, ListGuesser, EditGuesser } from "react-admin";
-import { UserFilters, UserList, UserShow, UserEdit, UserCreate } from "./Users";
-import { Link, Redirect } from "react-router-dom";
+import { Admin, Resource, } from "react-admin";
+import { UserList, UserShow, UserEdit, UserCreate } from "./Users";
+import { Redirect } from "react-router-dom";
 import simpleRestProvider from "ra-data-simple-rest";
 import {
   LicenseList,
   LicenseShow,
   LicenseEdit,
-  LicenseCreate,
 } from "./License";
 import { PluginList, PluginShow, PluginEdit, PluginCreate } from "./Plugins";
 import {
@@ -27,7 +26,7 @@ import SettingsInputHdmiIcon from "@material-ui/icons/SettingsInputHdmi";
 import AccountTree from "@material-ui/icons/AccountTree";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import SettingsInputComponent from "@material-ui/icons/SettingsInputComponent";
-import { AppBar } from "react-admin";
+import VerifyUserRole from "../VerifyUserRole";
 
 export const newOptions = {
   palette: {
@@ -57,15 +56,22 @@ export const newOptions = {
   },
 };
 
-const AdminDash = () => {
+function AdminDash () {
+
+  const user = VerifyUserRole()
+
   if (localStorage.getItem("token") === null) {
     return <Redirect to="/" />;
   }
-  if (localStorage.getItem("loggedin")) {
-    if (localStorage.getItem("isAdmin") === "False") {
-      return <Redirect to="/user/dashboard/" />;
+  if (localStorage.getItem("token")) {
+    if (user) {
+      if(!user.isAdmin)
+      {
+        return <Redirect to="/user/dashboard/" />;
+      }
     }
   }
+  
   return (
     <Admin
       theme={newOptions}

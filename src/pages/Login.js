@@ -10,7 +10,7 @@ import CardImg from "reactstrap/lib/CardImg";
 import Form from "reactstrap/lib/Form";
 import Label from "reactstrap/lib/Label";
 import { NavMenu } from "../components/NavMenu";
-import jwt_decode from "jwt-decode";
+import VerifyUserRole from "../components/VerifyUserRole";
 import "./CSS/Login.css";
 
 export class Login extends Component {
@@ -25,7 +25,7 @@ export class Login extends Component {
       token: "",
       hasError: false,
       errorMessage: "",
-      loggedIn: false,
+      role: "",
     };
     this.handleLogin = this.handleLogin.bind(this);
   }
@@ -33,11 +33,8 @@ export class Login extends Component {
   componentDidUpdate() {}
 
   setSession = (token) => {
-    const user = jwt_decode(token.data);
-    localStorage.setItem("loggedin", true);
     localStorage.setItem("token", token.data);
-    localStorage.setItem("isAdmin", user.role);
-    this.setState({ token: token.data, loggedIn: true });
+    this.setState({ token: token.data });
   };
 
   handleLogin = (event) => {
@@ -48,13 +45,13 @@ export class Login extends Component {
 
     this.setState({ hasError: false, errorMessage: "" });
 
-    if (email == "" || email == null) {
+    if (email === "" || email === null) {
       this.setState({
         hasError: true,
         errorMessage: "Email must be filled in!",
       });
       return;
-    } else if (password == "" || password == null) {
+    } else if (password === "" || password === null) {
       this.setState({
         hasError: true,
         errorMessage: "Password must be filled in!",
@@ -68,9 +65,11 @@ export class Login extends Component {
       url: process.env.REACT_APP_API_BACKEND + "/api/v1/Auth/LogIn",
       data: { email, password },
     })
-      .then((token) => this.setSession(token))
+      .then((token) => {
+        this.setSession(token)
+      })
       .catch(function (error) {
-        if (error.message == "Request failed with status code 401") {
+        if (error.message === "Request failed with status code 401") {
           self.setState({
             hasError: true,
             errorMessage: "Username or Password is incorrect.",
@@ -83,12 +82,8 @@ export class Login extends Component {
   };
 
   render() {
-    if (localStorage.getItem("loggedin")) {
-      if (localStorage.getItem("isAdmin") === "False")
-        return <Redirect to="/plugins" />;
-      else {
-        return <Redirect to="/admin/dashboard/" />;
-      }
+    if (localStorage.getItem("token") !== null) {
+        return <Redirect to="/user/dashboard" />;
     }
 
     return (

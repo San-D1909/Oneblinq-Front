@@ -1,9 +1,8 @@
 // in src/posts.js
 import * as React from "react";
-import { List, Datagrid, TextField, DateField, BooleanField, ImageInput, TranslatableInputs, ImageField, NumberInput, TranslatableFields, Show, SimpleShowLayout, RichTextField, NumberField, ShowButton, TabbedShowLayout, Tab, ReferenceArrayField, ArrayField, email, EmailField, DeleteButton } from 'react-admin';
-import { Create, Edit, SimpleForm, TextInput, DateInput, ReferenceManyField, EditButton, required, DeleteWithConfirmButton} from 'react-admin';
-import RichTextInput from 'ra-input-rich-text';
-import { DeviceCreateButton, DeviceShow} from "./Devices";
+import { List, Datagrid, TextField, DateField, Show, ShowButton, TabbedShowLayout, Tab, ArrayField } from 'react-admin';
+import { DeleteWithConfirmButton} from 'react-admin';
+import { DeviceCreateButton } from "./Devices";
 
 
 export const LicenseList = (props) => (

@@ -3,7 +3,7 @@ import { Component } from "react";
 import { NavMenu } from "../components/NavMenu";
 import Label from "reactstrap/lib/Label";
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Input } from "reactstrap";
 import Button from "reactstrap/lib/Button";
 
@@ -16,7 +16,6 @@ export class UserInfo extends Component {
     this.state = {
       userData: [],
       companyData: [],
-      loggedIn: false,
       message: 0,
       jtoken: localStorage.getItem("token"),
     };
@@ -66,13 +65,13 @@ export class UserInfo extends Component {
   };
 
   render() {
-    if (!localStorage.getItem("loggedin")) {
+    if (!localStorage.getItem("token")) {
       return <Redirect to="/login" />;
     }
     return (
       <body>
         <NavMenu />
-        {this.state.message == 2 && (
+        {this.state.message === 2 && (
           <>
             <div class="alert alert-success">
               <strong>Success!</strong> The information has been updated!
@@ -100,7 +99,7 @@ export class UserInfo extends Component {
                 type="fullName"
                 placeholder={this.state.userData.fullName}
                 onChange={(e) =>
-                  (this.state.userData.fullName = e.target.value)
+                  ( this.setState({fullname: e.target.value}) )
                 }
                 name="fullName"
               />
@@ -110,11 +109,11 @@ export class UserInfo extends Component {
               <Input
                 type="email"
                 placeholder={this.state.userData.email}
-                onChange={(e) => (this.state.userData.email = e.target.value)}
+                onChange={(e) => (this.setState({email: e.target.value}))}
                 name="email"
               />
             </div>
-            {this.state.companyData.id != 0 && (
+            {this.state.companyData.id !== 0 && (
               <>
                 <h3> Company info</h3>
                 <div className="py-2">
@@ -123,7 +122,7 @@ export class UserInfo extends Component {
                     type="companyName"
                     placeholder={this.state.companyData.companyName}
                     onChange={(e) =>
-                      (this.state.companyData.companyName = e.target.value)
+                      (this.setState({companyName: e.target.value}))
                     }
                     name="companyName"
                   />
@@ -134,7 +133,7 @@ export class UserInfo extends Component {
                     type="PhoneNumber"
                     placeholder={this.state.companyData.phoneNumber}
                     onChange={(e) =>
-                      (this.state.companyData.phoneNumber = e.target.value)
+                      (this.setState({phoneNumber: e.target.value}))
                     }
                     name="PhoneNumber"
                   />
@@ -146,7 +145,7 @@ export class UserInfo extends Component {
                       type="Street"
                       placeholder={this.state.companyData.street}
                       onChange={(e) =>
-                        (this.state.companyData.street = e.target.value)
+                        (this.setState({street: e.target.value}))
                       }
                       name="Street"
                     />
@@ -157,7 +156,7 @@ export class UserInfo extends Component {
                       type="HouseNumber"
                       placeholder={this.state.companyData.houseNumber}
                       onChange={(e) =>
-                        (this.state.companyData.houseNumber = e.target.value)
+                        (this.setState({houseNumber: e.target.value}))
                       }
                       name="HouseNumber"
                     />
@@ -168,7 +167,7 @@ export class UserInfo extends Component {
                       type="Zipcode"
                       placeholder={this.state.companyData.zipCode}
                       onChange={(e) =>
-                        (this.state.companyData.zipCode = e.target.value)
+                        (this.setState({zipCode: e.target.value}))
                       }
                       name="Zipcode"
                     />

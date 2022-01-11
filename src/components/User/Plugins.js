@@ -4,13 +4,6 @@ import {
   List,
   Datagrid,
   TextField,
-  DateField,
-  BooleanField,
-  ImageInput,
-  TranslatableInputs,
-  ImageField,
-  NumberInput,
-  TranslatableFields,
   Show,
   SimpleShowLayout,
   RichTextField,
@@ -18,16 +11,8 @@ import {
   ShowButton,
 } from "react-admin";
 import {
-  Create,
-  Edit,
-  SimpleForm,
   TextInput,
-  DateInput,
-  ReferenceManyField,
-  EditButton,
-  required,
 } from "react-admin";
-import RichTextInput from "ra-input-rich-text";
 
 const PluginFilters = [
   <TextInput label="Plugin name" source="pluginName" />,

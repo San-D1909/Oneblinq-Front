@@ -59,9 +59,6 @@ export class Register extends Component {
         userdata.company = company;
         userdata.hascompany = this.state.hasCompany
 
-        const { email } = user.email;
-        const { password } = user.password;
-
         axios({
             method: 'post',
             url: process.env.REACT_APP_API_BACKEND + '/api/v1/Auth/Register',
