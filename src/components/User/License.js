@@ -5,9 +5,13 @@ import { Create, Edit, SimpleForm, TextInput, DateInput, ReferenceManyField, Edi
 import RichTextInput from 'ra-input-rich-text';
 import { DeviceCreateButton, DeviceShow} from "./Devices";
 
+const LicenseFilters = [
+    <TextInput label="Plugin name" source="plugin.pluginName" />,
+    <TextInput label="License" source="license.licenseKey" />,
+];
 
 export const LicenseList = (props) => (
-    <List {...props}>
+    <List {...props}  filters={LicenseFilters}>
         <Datagrid>
             <TextField source="license.licenseKey" label="License key"/>
             <TextField source="plugin.pluginName" label="Plugin name" />
