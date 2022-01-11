@@ -4,36 +4,28 @@ import {
   List,
   Datagrid,
   TextField,
-  DateField,
   BooleanField,
-  ImageInput,
-  TranslatableInputs,
-  ImageField,
   NumberInput,
-  TranslatableFields,
   Show,
-  SimpleShowLayout,
   RichTextField,
   NumberField,
   ShowButton,
   TabbedShowLayout,
   Tab,
-  ReferenceArrayField,
   ArrayField,
-  email,
   EmailField,
-} from "react-admin";
-import {
   Create,
   Edit,
   SimpleForm,
   TextInput,
-  DateInput,
   ReferenceManyField,
   EditButton,
   required,
+  SaveButton,
+  Toolbar,
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
+import axios from "axios";
 
 const PluginFilters = [
   <TextInput label="Plugin name" source="pluginName" />,
@@ -133,6 +125,23 @@ const UsersOverview = (props) => {
   return <List {...props}></List>;
 };
 
+const VariantCreateToolbar = props => (
+  <Toolbar {...props} >
+      <SaveButton />
+  </Toolbar>
+)
+
+const onSaveVariant = (values) => {
+  axios.post("/api/v1/admin/PluginVariant", {
+    pluginId: values.id,
+    description: values.description,
+    price: values.price
+  }
+  ).then((response) => {
+    window.location.reload(false);
+  });
+}
+
 export const PluginShow = (props) => {
   return (
     <Show {...props}>
@@ -166,6 +175,31 @@ export const PluginShow = (props) => {
               <TextField source="company.kVKNumber" label="KVK number" />
             </Datagrid>
           </ArrayField>
+        </Tab>
+        <Tab label="Variants" path="pluginVariant">
+          <SimpleForm save={onSaveVariant} toolbar={<VariantCreateToolbar />}>
+            <TextInput
+              source="description"
+              label="Plugin description"
+              validate={required()}
+            />
+            <NumberInput
+              source="price"
+              label="Price"
+              validate={required()}
+            />
+          </SimpleForm>
+          <ReferenceManyField reference="pluginVariant" target="pluginId" addLabel={false}>
+            <Datagrid>
+              <TextField source="description" />
+              <NumberField
+                source="price"
+                label="Price"
+                options={{ style: "currency", currency: "EUR" }}
+              />
+              <EditButton />
+            </Datagrid>
+          </ReferenceManyField>
         </Tab>
       </TabbedShowLayout>
     </Show>

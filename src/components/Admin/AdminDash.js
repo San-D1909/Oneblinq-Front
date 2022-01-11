@@ -22,6 +22,7 @@ import {
   PluginBundleEdit,
   PluginBundleShow,
 } from "./PluginBundles";
+import { PluginVariantEdit } from "./PluginVariants";
 import PeopleIcon from "@material-ui/icons/People";
 import SettingsInputHdmiIcon from "@material-ui/icons/SettingsInputHdmi";
 import AccountTree from "@material-ui/icons/AccountTree";
@@ -112,6 +113,7 @@ const AdminDash = () => {
         show={LicenseTypeShow}
         icon={SettingsInputComponent}
       />
+      <Resource name="pluginVariant" edit={PluginVariantEdit} />
     </Admin>
   );
 };
