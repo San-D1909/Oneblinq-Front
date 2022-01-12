@@ -1,9 +1,6 @@
 import * as React from "react";
-import { List, Datagrid, TextField, DateField, BooleanField, ImageInput, TranslatableInputs, ImageField, NumberInput, TranslatableFields, Show, SimpleShowLayout, RichTextField, NumberField, ShowButton, Button, CreateButton, DeleteButton } from 'react-admin';
-import { Create, Edit, SimpleForm, TextInput, DateInput, ReferenceManyField, EditButton, required } from 'react-admin';
-import RichTextInput from 'ra-input-rich-text';
+import { List, Datagrid, TextField, DateField, Show, SimpleShowLayout, ShowButton, Button, DeleteButton } from 'react-admin';
 import { Form } from "react-bootstrap";
-import {OSInfo} from '../DeviceInfo'
 import axios from "axios";
 import platform from 'platform';
 

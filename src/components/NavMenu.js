@@ -9,25 +9,21 @@ export class NavMenu extends Component {
     static displayName = NavMenu.name;
 
     state = {
-        loggedIn: false,
         token: '',
         collapsed: false
     }
 
     constructor(props) {
         super(props);
-        let loggedIn = false;
         let token = null;
 
-        if (props.loggedIn !== undefined || props.token === undefined) {
-            loggedIn = ReactSession.get("loggedIn");
+        if (props.token === undefined) {
             token = ReactSession.get("token");
         }
 
         this.toggleNavbar = this.toggleNavbar.bind(this);
         this.state = {
             collapsed: true,
-            loggedIn: loggedIn,
             token: token
         };
     }
@@ -49,7 +45,7 @@ export class NavMenu extends Component {
 
         if (path === "/login" || path === "/logout" || path === "/register") {
             LoginLogoutButton = <></>;
-        }else if (localStorage.getItem("loggedin")) {
+        }else if (localStorage.getItem("token")) {
             LoginLogoutButton = (
                 <NavDropdown id="accountdropdown" title="Account">
                     <NavDropdown.Item href="/user/dashboard/">Dashboard</NavDropdown.Item>

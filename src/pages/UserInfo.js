@@ -3,7 +3,7 @@ import { Component } from "react";
 import { NavMenu } from "../components/NavMenu";
 import Label from "reactstrap/lib/Label";
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Input } from "reactstrap";
 import Button from "reactstrap/lib/Button";
 
@@ -16,7 +16,6 @@ export class UserInfo extends Component {
     this.state = {
       userData: [],
       companyData: [],
-      loggedIn: false,
       message: 0,
       jtoken: localStorage.getItem("token"),
     };
@@ -66,13 +65,13 @@ export class UserInfo extends Component {
   };
 
   render() {
-    if (!localStorage.getItem("loggedin")) {
+    if (!localStorage.getItem("token")) {
       return <Redirect to="/login" />;
     }
     return (
       <body>
         <NavMenu />
-        {this.state.message == 2 && (
+        {this.state.message === 2 && (
           <>
             <div class="alert alert-success">
               <strong>Success!</strong> The information has been updated!

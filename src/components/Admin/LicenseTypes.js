@@ -4,36 +4,19 @@ import {
   List,
   Datagrid,
   TextField,
-  DateField,
-  BooleanField,
-  ImageInput,
-  TranslatableInputs,
-  ImageField,
   NumberInput,
-  TranslatableFields,
   Show,
   SimpleShowLayout,
-  RichTextField,
   NumberField,
   ShowButton,
-  TabbedShowLayout,
-  Tab,
-  ReferenceArrayField,
-  ArrayField,
-  email,
-  EmailField,
 } from "react-admin";
 import {
   Create,
   Edit,
   SimpleForm,
   TextInput,
-  DateInput,
-  ReferenceManyField,
-  EditButton,
   required,
 } from "react-admin";
-import RichTextInput from "ra-input-rich-text";
 
 export const LicenseTypeList = (props) => (
   <List {...props}>

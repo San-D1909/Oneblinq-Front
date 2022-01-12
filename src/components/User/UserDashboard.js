@@ -1,16 +1,15 @@
 ﻿import { Redirect } from "react-router-dom";
-import { Admin, Resource, ListGuesser, EditGuesser } from "react-admin";
+import { Admin, Resource } from "react-admin";
 import {
-  PluginCreate,
-  PluginEdit,
   PluginList,
   PluginShow,
 } from "../User/Plugins";
 import { LicenseList, LicenseShow } from "../User/License";
 import simpleRestProvider from "ra-data-simple-rest";
-import React, { forwardRef } from "react";
+import React from "react";
 import SettingsInputHdmiIcon from "@material-ui/icons/SettingsInputHdmi";
 import AccountTree from "@material-ui/icons/AccountTree";
+import VerifyUserRole from "../VerifyUserRole";
 
 export const newOptions = {
   palette: {
@@ -40,14 +39,22 @@ export const newOptions = {
   },
 };
 
-const UserDashboard = () => {
+function UserDashboard () {
+
+  const user = VerifyUserRole()
+
   if (localStorage.getItem("token") === null) {
     return <Redirect to="/" />;
-  } else if (localStorage.getItem("isAdmin") === "True") {
-    return <Redirect to="/admin/dashboard" />;
-  }
-  let protocol = window.location.protocol;
+    } else if (user) {
+      if(user.isAdmin)
+      {
+        return <Redirect to="/admin/dashboard" />;
+      }
+    }
+
+  
   let token = localStorage.getItem("token");
+
   return (
     <Admin
       theme={newOptions}
