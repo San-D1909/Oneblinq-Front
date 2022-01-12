@@ -67,9 +67,9 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
 });
 
 const addUploadFeature = requestHandler => (type, resource, params) => {
+  console.log(type);
+  console.log(resource);
   if (type === 'CREATE' && resource === 'plugin') {
-    console.log(resource);
-    console.log(params);
     // notice that following condition can be true only when `<ImageInput source="pictures" />` component has parameter `multiple={true}`
     // if parameter `multiple` is false, then data.pictures is not an array, but single object
     if (params.data.image) {
@@ -117,7 +117,8 @@ const addUploadFeature = requestHandler => (type, resource, params) => {
       case "GET_ONE":
         return requestHandler.getOne(resource, params);
       case "UPDATE":
-        return requestHandler.update(resource, params);
+        let updateResponse = requestHandler.update(resource, params);
+        return updateResponse;
       case "CREATE":
         return requestHandler.create(resource, params);
       case "UPDATE_MANY":
