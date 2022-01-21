@@ -88,8 +88,8 @@ export const PluginCreate = (props) => (
       {/*  label="Full Price"*/}
       {/*  validate={required()}*/}
       {/*/>*/}
-      <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>}>
-        <ImageField source="src" title="title" />
+      <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>} minSize={5} validate={required()}>
+        <ImageField source="src" title="title"/>
       </ImageInput>
     </SimpleForm>
   </Create>
@@ -108,6 +108,9 @@ export const PluginEdit = (props) => (
         label="Plugin description"
         validate={required()}
       />
+      <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>} minSize={5} validate={required()}>
+        <ImageField source="src" title="title" validate={required()}/>
+      </ImageInput>
     </SimpleForm>
   </Edit>
 );

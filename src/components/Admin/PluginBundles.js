@@ -73,7 +73,7 @@ export const PluginBundleCreate = (props) => (
       <ReferenceArrayInput label="plugin" reference="plugin" source="pluginIds">
         <SelectArrayInput optionText="pluginName" validate={required()} />
       </ReferenceArrayInput>
-      <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>}>
+      <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>}  minSize={5} validate={required()}>
         <ImageField source="src" title="title" />
       </ImageInput>
     </SimpleForm>
@@ -98,7 +98,7 @@ export const PluginBundleEdit = (props) => {
         <ReferenceArrayInput label="plugin" reference="plugin" source="plugins">
           <SelectArrayInput optionText="pluginName" validate={required()} />
         </ReferenceArrayInput>
-        <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>}>
+        <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>}  minSize={5} validate={required()}>
           <ImageField source="src" title="title" />
         </ImageInput>
       </SimpleForm>
