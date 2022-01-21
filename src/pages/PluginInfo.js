@@ -83,7 +83,7 @@ function ProductVariants({ variant, setVariant, variants }) {
                                     <div>
                                         <h4 style={subscriptionTitle}>{variant.description}</h4>
                                     </div>
-                                    <div style={subscriptionSubTitle}>For todo maxamount </div>
+                                    <div style={subscriptionSubTitle}>{variant.maxActivations} </div>
                                 </label>
                             </RadioGroup.Description>
                         </>
@@ -136,6 +136,7 @@ export default function PluginInfo() {
                     <ProductVariants variants={variants} variant={variant} setVariant={setVariant} />
                     <form action={process.env.REACT_APP_API_BACKEND + "/api/v1/CheckoutApi/create-checkout-session"} method="POST">
                         <input type="hidden" name="priceId" value={variant.stripePriceId} />
+                        <input type="hidden" name="isSubscription" value={variant.isSubscription} />
                         {/* TODO: auto add email when user is authenticated */}
                         {/* {authenticated?? 
                             <input type="hidden" name="email" value={authenticated.user.email} />
