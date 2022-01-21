@@ -10,12 +10,12 @@ export class PluginCard extends Component {
         const textDecoNone = {
             textDecoration: "none"
         }
-        const imageData = image ? image.imageData : "https://via.placeholder.com/344x216.png";
-        console.log(imageData);
+        console.log(image);
+
         return (
             <a style={textDecoNone} className="card plugin" href={"/plugins/" + id }>
                 <div className="card-body">
-                    <img src={imageData} alt={pluginName} />
+                    <img src={image.imageData} alt={pluginName} />
                 </div>
                 <div className="card-footer">
                     <span>{pluginName}</span>
