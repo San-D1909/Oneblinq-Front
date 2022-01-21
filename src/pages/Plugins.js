@@ -18,6 +18,7 @@ function PluginList(props) {
 
 function PluginBundleList(props) {
   const { bundles } = props;
+  console.log(bundles);
   const listItems = bundles.map((bundle, i) => (
     <div key={i} className="col-12 col-lg-4 col-md-6 py-3">
       <BundleCard bundle={bundle} />
