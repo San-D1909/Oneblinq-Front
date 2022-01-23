@@ -24,8 +24,7 @@ import {
   SaveButton,
   Toolbar,
   ImageInput,
-  ImageField,
-  BooleanInput
+  ImageField, BooleanInput
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
 import axios from "axios";
@@ -50,17 +49,18 @@ const PluginPanel = ({ id, record, resource }) => {
 export const PluginList = (props) => (
   <List {...props} filters={PluginFilters}>
     <Datagrid expand={<PluginPanel />}>
+      <ImageField source="image.imageData" label="image" />
       <TextField source="pluginName" label="Plugin name" />
-      <NumberField
-        source="monthlyPrice"
-        label="Monthly Price"
-        options={{ style: "currency", currency: "EUR" }}
-      />
-      <NumberField
-        source="fullPrice"
-        label="Full Price"
-        options={{ style: "currency", currency: "EUR" }}
-      />
+      {/*<NumberField*/}
+      {/*  source="monthlyPrice"*/}
+      {/*  label="Monthly Price"*/}
+      {/*  options={{ style: "currency", currency: "EUR" }}*/}
+      {/*/>*/}
+      {/*<NumberField*/}
+      {/*  source="fullPrice"*/}
+      {/*  label="Full Price"*/}
+      {/*  options={{ style: "currency", currency: "EUR" }}*/}
+      {/*/>*/}
       <PluginShowButton {...props} />
     </Datagrid>
   </List>
@@ -79,18 +79,18 @@ export const PluginCreate = (props) => (
         label="Plugin description"
         validate={required()}
       />
-      <NumberInput
-        source="monthlyPrice"
-        label="Monthly Price"
-        validate={required()}
-      />
-      <NumberInput
-        source="fullPrice"
-        label="Full Price"
-        validate={required()}
-      />
-      <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>}>
-        <ImageField source="src" title="title" />
+      {/*<NumberInput*/}
+      {/*  source="monthlyPrice"*/}
+      {/*  label="Monthly Price"*/}
+      {/*  validate={required()}*/}
+      {/*/>*/}
+      {/*<NumberInput*/}
+      {/*  source="fullPrice"*/}
+      {/*  label="Full Price"*/}
+      {/*  validate={required()}*/}
+      {/*/>*/}
+      <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>} minSize={5} validate={required()}>
+        <ImageField source="src" title="title"/>
       </ImageInput>
     </SimpleForm>
   </Create>
@@ -109,16 +109,9 @@ export const PluginEdit = (props) => (
         label="Plugin description"
         validate={required()}
       />
-      <NumberInput
-        source="monthlyPrice"
-        label="Monthly Price"
-        validate={required()}
-      />
-      <NumberInput
-        source="fullPrice"
-        label="Full Price"
-        validate={required()}
-      />
+      <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>} minSize={5} validate={required()}>
+        <ImageField source="src" title="title" validate={required()}/>
+      </ImageInput>
     </SimpleForm>
   </Edit>
 );
@@ -143,6 +136,7 @@ const onSaveVariant = (values) => {
     pluginId: values.id,
     description: values.description,
     price: values.price,
+    maxActivations: values.maxActivations,
     isSubscription: values.isSubscription
   }
   ).then((response) => {
@@ -160,16 +154,16 @@ export const PluginShow = (props) => {
             source="pluginDescription"
             label="Plugin description"
           />
-          <NumberField
-            source="monthlyPrice"
-            label="Monthly Price"
-            options={{ style: "currency", currency: "EUR" }}
-          />
-          <NumberField
-            source="fullPrice"
-            label="Full Price"
-            options={{ style: "currency", currency: "EUR" }}
-          />
+          {/*<NumberField*/}
+          {/*  source="monthlyPrice"*/}
+          {/*  label="Monthly Price"*/}
+          {/*  options={{ style: "currency", currency: "EUR" }}*/}
+          {/*/>*/}
+          {/*<NumberField*/}
+          {/*  source="fullPrice"*/}
+          {/*  label="Full Price"*/}
+          {/*  options={{ style: "currency", currency: "EUR" }}*/}
+          {/*/>*/}
           <ImageField source="image.imageData" title="title" label="Image"/>
         </Tab>
         <Tab label="Used By" path="user">
@@ -197,11 +191,8 @@ export const PluginShow = (props) => {
               label="Price"
               validate={required()}
             />
-            <BooleanInput
-              source="isSubscription"
-              label="Subscription"
-              validate={required()}
-            />
+            <NumberInput source="maxActivations" label="Activation count" />
+            <BooleanInput source="isSubscription" label="Subscription" />
           </SimpleForm>
           <ReferenceManyField reference="pluginVariant" target="pluginId" addLabel={false}>
             <Datagrid>
@@ -211,6 +202,8 @@ export const PluginShow = (props) => {
                 label="Price"
                 options={{ style: "currency", currency: "EUR" }}
               />
+              <NumberField source="maxActivations" label="Activation count" />
+              <BooleanField source="isSubscription" label="Subscription" />
               <EditButton />
             </Datagrid>
           </ReferenceManyField>

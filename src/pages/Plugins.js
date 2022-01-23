@@ -18,6 +18,7 @@ function PluginList(props) {
 
 function PluginBundleList(props) {
   const { bundles } = props;
+  console.log(bundles);
   const listItems = bundles.map((bundle, i) => (
     <div key={i} className="col-12 col-lg-4 col-md-6 py-3">
       <BundleCard bundle={bundle} />
@@ -27,6 +28,7 @@ function PluginBundleList(props) {
   return <div className="row">{listItems}</div>;
 }
 function BundleCard(props) {
+
   const bundleCardTitleStyle = {
     backgroundColor: "#deeff4",
     color: "#02021E",
@@ -38,6 +40,9 @@ function BundleCard(props) {
     textDecoration: "none",
   };
   const { bundle } = props;
+  let image = bundle.image ? bundle.image.imageData : "https://via.placeholder.com/344x216.png";
+  console.log(image)
+
   return (
     <a
       style={textDecoNone}
@@ -46,7 +51,7 @@ function BundleCard(props) {
     >
       <div className="card-body">
         <img
-          src="https://via.placeholder.com/344x216.png"
+          src={image}
           alt={bundle.bundleName}
         />
       </div>

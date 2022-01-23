@@ -1,9 +1,10 @@
 ﻿import * as React from "react";
-import { Admin, Resource, } from "react-admin";
+import { AppBar, Admin, Resource, Layout, } from "react-admin";
 import { UserList, UserShow, UserEdit, UserCreate } from "./Users";
 import { Redirect } from "react-router-dom";
 import simpleRestProvider from "ra-data-simple-rest";
 import {DataProvider} from "ra-core";
+import Typography from '@material-ui/core/Typography';
 import {
   LicenseList,
   LicenseShow,
@@ -29,7 +30,18 @@ import AccountTree from "@material-ui/icons/AccountTree";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import SettingsInputComponent from "@material-ui/icons/SettingsInputComponent";
 import VerifyUserRole from "../VerifyUserRole";
+import {makeStyles} from "@material-ui/core";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiPaper-root.MuiSnackbarContent-root": {
+      display: "none",
+    },
+    ".MuiPaper-root .RaImageField-image-95": {
+      width: "200px"
+    }
+  }
+}));
 export const newOptions = {
   palette: {
     type: "dark",
@@ -70,7 +82,7 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
 const addUploadFeature = requestHandler => (type, resource, params) => {
   console.log(type);
   console.log(resource);
-  if (type === 'CREATE' && resource === 'plugin') {
+  if (type === 'CREATE' && (resource === 'plugin' || resource === 'pluginbundle')) {
     // notice that following condition can be true only when `<ImageInput source="pictures" />` component has parameter `multiple={true}`
     // if parameter `multiple` is false, then data.pictures is not an array, but single object
     if (params.data.image) {
@@ -128,10 +140,40 @@ const addUploadFeature = requestHandler => (type, resource, params) => {
   }
 };
 
+const   navbarStyling = makeStyles({
+  title: {
+      flex: 1,
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+  },
+  spacer: {
+      flex: 1,
+  },
+});
+
+const MyAppBar = props => {
+  const classes = navbarStyling();
+  return (
+      <AppBar {...props}>
+          <Typography
+              variant="h6"
+              color="inherit"
+              className={classes.title}
+              id="react-admin-title"
+          />
+          <a className="h2 text-dark" style={{ textDecoration: "none"}} href="/">OneBlinq</a>
+          <span className={classes.spacer} />
+      </AppBar>
+  );
+};
+
+const MyLayout = (props) => <Layout {...props} appBar={MyAppBar} />;
+
 function AdminDash () {
 
   const user = VerifyUserRole()
-
+  const classes = useStyles();
   let dataProvider = simpleRestProvider(process.env.REACT_APP_API_BACKEND + "/api/v1/admin");
   dataProvider = addUploadFeature(dataProvider);
   if (localStorage.getItem("token") === null) {
@@ -148,8 +190,10 @@ function AdminDash () {
   
   return (
     <Admin
+      layout={MyLayout}
       theme={newOptions}
       dataProvider={dataProvider}
+      className={classes.root}
     >
       <Resource
         name="user"

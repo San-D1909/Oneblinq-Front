@@ -13,7 +13,7 @@ import {
   TabbedShowLayout,
   Tab,
   ArrayField,
-  EmailField,
+  EmailField, ImageInput, ImageField,
 } from "react-admin";
 import {
   Create,
@@ -45,6 +45,7 @@ const PluginBundlePanel = ({ id, record, resource }) => {
 export const PluginBundleList = (props) => (
   <List {...props} filters={PluginFilters}>
     <Datagrid expand={<PluginBundlePanel />}>
+      <ImageField source="image.imageData" label="Image"/>
       <TextField source="bundleName" label="Plugin name" />
       <NumberField
         source="price"
@@ -72,6 +73,9 @@ export const PluginBundleCreate = (props) => (
       <ReferenceArrayInput label="plugin" reference="plugin" source="pluginIds">
         <SelectArrayInput optionText="pluginName" validate={required()} />
       </ReferenceArrayInput>
+      <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>}  minSize={5} validate={required()}>
+        <ImageField source="src" title="title" />
+      </ImageInput>
     </SimpleForm>
   </Create>
 );
@@ -94,6 +98,9 @@ export const PluginBundleEdit = (props) => {
         <ReferenceArrayInput label="plugin" reference="plugin" source="plugins">
           <SelectArrayInput optionText="pluginName" validate={required()} />
         </ReferenceArrayInput>
+        <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>}  minSize={5} validate={required()}>
+          <ImageField source="src" title="title" />
+        </ImageInput>
       </SimpleForm>
     </Edit>
   );
@@ -121,6 +128,7 @@ export const PluginBundleShow = (props) => {
             label="Plugin Bundle description"
           />
           <NumberField source="price" label="Price" />
+          <ImageField source="image.imageData" title="title" label="Image"/>
         </Tab>
         <Tab label="Used By" path="user">
           <ArrayField className="col-12" source="users" label="">
