@@ -9,6 +9,7 @@ import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Logout } from "./pages/Logout";
 import PluginInfo from "./pages/PluginInfo";
+import BundleInfo from "./pages/BundleInfo";
 import { Plugins } from "./pages/Plugins";
 import { Register } from "./pages/Register";
 import { ResetPassword } from "./pages/ResetPassword";
@@ -32,6 +33,7 @@ export default class App extends Component {
         <Route exact path="/" component={Home} />
         <Route exact path="/plugins" component={Plugins} />
         <Route path="/plugins/:pluginId" component={PluginInfo} />
+        <Route path="/bundle/:bundleId" component={BundleInfo} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/logout" component={Logout} />
         <Route exact path="/register" component={Register} />

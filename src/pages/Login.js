@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { Component } from "react";
-import ReactSession from "react-client-session/dist/ReactSession";
 import { Link, Redirect } from "react-router-dom";
 import { Input } from "reactstrap";
 import Button from "reactstrap/lib/Button";
