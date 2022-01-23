@@ -24,7 +24,7 @@ import {
   SaveButton,
   Toolbar,
   ImageInput,
-  ImageField
+  ImageField, BooleanInput
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
 import axios from "axios";
@@ -134,7 +134,9 @@ const onSaveVariant = (values) => {
   axios.post("/api/v1/admin/PluginVariant", {
     pluginId: values.id,
     description: values.description,
-    price: values.price
+    price: values.price,
+    maxActivations: values.maxActivations,
+    isSubscription: values.isSubscription
   }
   ).then((response) => {
     window.location.reload(false);
@@ -188,6 +190,8 @@ export const PluginShow = (props) => {
               label="Price"
               validate={required()}
             />
+            <NumberInput source="maxActivations" label="Activation count" />
+            <BooleanInput source="isSubscription" label="Subscription" />
           </SimpleForm>
           <ReferenceManyField reference="pluginVariant" target="pluginId" addLabel={false}>
             <Datagrid>
@@ -197,6 +201,8 @@ export const PluginShow = (props) => {
                 label="Price"
                 options={{ style: "currency", currency: "EUR" }}
               />
+              <NumberField source="maxActivations" label="Activation count" />
+              <BooleanField source="isSubscription" label="Subscription" />
               <EditButton />
             </Datagrid>
           </ReferenceManyField>

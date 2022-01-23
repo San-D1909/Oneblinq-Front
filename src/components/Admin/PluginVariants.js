@@ -5,6 +5,7 @@ import {
   TextField,
   DateField,
   BooleanField,
+  BooleanInput,
   ImageInput,
   TranslatableInputs,
   ImageField,
@@ -31,6 +32,20 @@ import {
   required,
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
+import axios from "axios";
+
+const onSaveVariant = (values) => {
+  axios.put("/api/v1/admin/PluginVariant", {
+        pluginId: values.id,
+        description: values.description,
+        price: values.price,
+        maxActivations: values.maxActivations,
+        isSubscription: values.isSubscription
+      }
+  ).then((response) => {
+    window.location.reload(false);
+  });
+}
 
 export const PluginVariantEdit = (props) => (
   <Edit {...props}>
@@ -45,6 +60,7 @@ export const PluginVariantEdit = (props) => (
         label="Price"
         validate={required()}
       />
+      <BooleanInput source="isSubscription" label="Subscription" />
     </SimpleForm>
   </Edit>
 );
