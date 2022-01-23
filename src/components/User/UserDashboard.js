@@ -1,5 +1,5 @@
 ﻿import { Redirect } from "react-router-dom";
-import { Admin, Resource } from "react-admin";
+import { Admin, Resource, Layout, AppBar } from "react-admin";
 import {
   PluginList,
   PluginShow,
@@ -10,6 +10,8 @@ import React from "react";
 import SettingsInputHdmiIcon from "@material-ui/icons/SettingsInputHdmi";
 import AccountTree from "@material-ui/icons/AccountTree";
 import VerifyUserRole from "../VerifyUserRole";
+import Typography from '@material-ui/core/Typography';
+import {makeStyles} from "@material-ui/core";
 
 export const newOptions = {
   palette: {
@@ -39,6 +41,37 @@ export const newOptions = {
   },
 };
 
+const   navbarStyling = makeStyles({
+  title: {
+      flex: 1,
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+  },
+  spacer: {
+      flex: 1,
+  },
+});
+
+const MyAppBar = props => {
+  const classes = navbarStyling();
+  return (
+      <AppBar {...props}>
+          <Typography
+              variant="h6"
+              color="inherit"
+              className={classes.title}
+              id="react-admin-title"
+          />
+          <a className="h2 text-dark" style={{ textDecoration: "none"}} href="/">OneBlinq</a>
+          <span className={classes.spacer} />
+      </AppBar>
+  );
+};
+
+const MyLayout = (props) => <Layout {...props} appBar={MyAppBar} />;
+
+
 function UserDashboard () {
 
   const user = VerifyUserRole()
@@ -57,6 +90,7 @@ function UserDashboard () {
 
   return (
     <Admin
+    layout={MyLayout}
       theme={newOptions}
       dataProvider={simpleRestProvider(
         process.env.REACT_APP_API_BACKEND + `/api/v1/user/${token}`

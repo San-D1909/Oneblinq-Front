@@ -1,9 +1,10 @@
 ﻿import * as React from "react";
-import { Admin, Resource, } from "react-admin";
+import { AppBar, Admin, Resource, Layout, } from "react-admin";
 import { UserList, UserShow, UserEdit, UserCreate } from "./Users";
 import { Redirect } from "react-router-dom";
 import simpleRestProvider from "ra-data-simple-rest";
 import {DataProvider} from "ra-core";
+import Typography from '@material-ui/core/Typography';
 import {
   LicenseList,
   LicenseShow,
@@ -139,6 +140,36 @@ const addUploadFeature = requestHandler => (type, resource, params) => {
   }
 };
 
+const   navbarStyling = makeStyles({
+  title: {
+      flex: 1,
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+  },
+  spacer: {
+      flex: 1,
+  },
+});
+
+const MyAppBar = props => {
+  const classes = navbarStyling();
+  return (
+      <AppBar {...props}>
+          <Typography
+              variant="h6"
+              color="inherit"
+              className={classes.title}
+              id="react-admin-title"
+          />
+          <a className="h2 text-dark" style={{ textDecoration: "none"}} href="/">OneBlinq</a>
+          <span className={classes.spacer} />
+      </AppBar>
+  );
+};
+
+const MyLayout = (props) => <Layout {...props} appBar={MyAppBar} />;
+
 function AdminDash () {
 
   const user = VerifyUserRole()
@@ -159,6 +190,7 @@ function AdminDash () {
   
   return (
     <Admin
+      layout={MyLayout}
       theme={newOptions}
       dataProvider={dataProvider}
       className={classes.root}
