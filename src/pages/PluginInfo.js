@@ -78,7 +78,7 @@ function ProductVariants({ variant, setVariant, variants }) {
                                 <label style={subscriptionOptionStyling}>
                                     <div className="pricetag" style={subscriptionPriceTag}>
                                         <b>€ {variant.price}</b>
-                                        <span> per maand</span>
+                                        <span> per month</span>
                                     </div>
                                     <div>
                                         <h4 style={subscriptionTitle}>{variant.description}</h4>

@@ -77,7 +77,7 @@ function ProductVariants({ variant, setVariant, variants }) {
                                 <label style={subscriptionOptionStyling}>
                                     <div className="pricetag" style={subscriptionPriceTag}>
                                         <b>€ {variant.price}</b>
-                                        <span> per maand</span>
+                                        <span> per month</span>
                                     </div>
                                     <div>
                                         <h4 style={subscriptionTitle}>{variant.description}</h4>
@@ -125,7 +125,9 @@ export default function BundleInfo() {
                     <div className="p-1" style={textStyling} dangerouslySetInnerHTML={{ __html: bundle.bundleDescription }} />
                 </div>
                 <div className="col">
+
                     <form action={process.env.REACT_APP_API_BACKEND + "/api/v1/CheckoutApi/create-checkout-session"} method="POST">
+
                         <button className="btn btn-oneblinq-roze mt-2 col-12" type="submit">Subscribe</button>
                     </form>
                 </div>
