@@ -24,10 +24,12 @@ import {
   SaveButton,
   Toolbar,
   ImageInput,
-  ImageField
+  ImageField,
+  BooleanInput
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
 import axios from "axios";
+import { Checkbox } from "@material-ui/core";
 
 const PluginFilters = [
   <TextInput label="Plugin name" source="pluginName" />,
@@ -140,7 +142,8 @@ const onSaveVariant = (values) => {
   axios.post("/api/v1/admin/PluginVariant", {
     pluginId: values.id,
     description: values.description,
-    price: values.price
+    price: values.price,
+    isSubscription: values.isSubscription
   }
   ).then((response) => {
     window.location.reload(false);
@@ -192,6 +195,11 @@ export const PluginShow = (props) => {
             <NumberInput
               source="price"
               label="Price"
+              validate={required()}
+            />
+            <BooleanInput
+              source="isSubscription"
+              label="Subscription"
               validate={required()}
             />
           </SimpleForm>

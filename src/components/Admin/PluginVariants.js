@@ -31,6 +31,7 @@ import {
   required,
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
+import { Checkbox } from "@material-ui/core";
 
 export const PluginVariantEdit = (props) => (
   <Edit {...props}>
@@ -43,6 +44,11 @@ export const PluginVariantEdit = (props) => (
       <NumberInput
         source="price"
         label="Price"
+        validate={required()}
+      />
+      <Checkbox
+        source="isSubscription"
+        label="Subscription"
         validate={required()}
       />
     </SimpleForm>
