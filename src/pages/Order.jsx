@@ -25,7 +25,7 @@ export default function Order() {
         {order ? <>
           <h1>Thank you for ordering!</h1>
           <p className="text-white">Once your payment has been processed, your license key wil be mailed to you.</p>
-          <p className="text-white"><a href="/login">Login</a> or <a href="/register">register</a> to see all your licenses keys on your dashboard</p>
+          <p className="text-white"><a href="/login">Login/Go to your dashboard</a> or <a href="/register">register</a> to see all your licenses keys on your dashboard</p>
         </> : <></>
         }
       </div>
