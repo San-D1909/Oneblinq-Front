@@ -42,10 +42,10 @@ export class Footer extends Component {
                             </li>
                         </ul>
                     </div>
-                    <div className="col">
+                    {/* <div className="col">
                         <h5>Partners</h5>
                         <img src="https://via.placeholder.com/100x45.png" alt="placeholder partner banner" />
-                    </div>
+                    </div> */}
                 </div>
             </footer>
         );
