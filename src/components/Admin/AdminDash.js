@@ -248,14 +248,6 @@ function AdminDash () {
         edit={LicenseEdit}
         icon={AccountTree}
       />
-      <Resource
-        name="licenseType"
-        list={LicenseTypeList}
-        create={LicenseTypeCreate}
-        edit={LicenseTypeEdit}
-        show={LicenseTypeShow}
-        icon={SettingsInputComponent}
-      />
       <Resource name="pluginVariant" edit={PluginVariantEdit} />
       <Resource name="pluginBundleVariant" />
     </Admin>
