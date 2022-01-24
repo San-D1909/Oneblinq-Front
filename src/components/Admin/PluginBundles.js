@@ -13,7 +13,7 @@ import {
   TabbedShowLayout,
   Tab,
   ArrayField,
-  EmailField, ImageInput, ImageField,
+  EmailField, ImageInput, ImageField, ReferenceManyField, EditButton, BooleanInput, Toolbar, SaveButton,
 } from "react-admin";
 import {
   Create,
@@ -25,6 +25,7 @@ import {
   ReferenceArrayInput,
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
+import axios from "axios";
 
 const PluginFilters = [
   <TextInput label="Plugin name" source="bundleName" />,
@@ -47,10 +48,6 @@ export const PluginBundleList = (props) => (
     <Datagrid expand={<PluginBundlePanel />}>
       <ImageField source="image.imageData" label="Image"/>
       <TextField source="bundleName" label="Plugin name" />
-      <NumberField
-        source="price"
-        options={{ style: "currency", currency: "EUR" }}
-      />
       <PluginBundleShowButton {...props} />
     </Datagrid>
   </List>
@@ -69,7 +66,6 @@ export const PluginBundleCreate = (props) => (
         label="Plugin Bundle description"
         validate={required()}
       />
-      <NumberInput source="price" validate={required()} />
       <ReferenceArrayInput label="plugin" reference="plugin" source="pluginIds">
         <SelectArrayInput optionText="pluginName" validate={required()} />
       </ReferenceArrayInput>
@@ -94,7 +90,6 @@ export const PluginBundleEdit = (props) => {
           label="Plugin Bundle description"
           validate={required()}
         />
-        <NumberInput source="price" label="Price" validate={required()} />
         <ReferenceArrayInput label="plugin" reference="plugin" source="plugins">
           <SelectArrayInput optionText="pluginName" validate={required()} />
         </ReferenceArrayInput>
@@ -116,6 +111,26 @@ const UsersOverview = (props) => {
   console.log(props);
   return <List {...props}></List>;
 };
+
+const VariantCreateToolbar = props => (
+    <Toolbar {...props} >
+      <SaveButton />
+    </Toolbar>
+)
+
+
+const onSaveVariant = (values) => {
+  axios.post("/api/v1/admin/PluginBundleVariant", {
+        pluginBundleId: values.id,
+        description: values.description,
+        price: values.price,
+        maxActivations: values.maxActivations,
+        isSubscription: values.isSubscription
+      }
+  ).then((response) => {
+    window.location.reload(false);
+  });
+}
 
 export const PluginBundleShow = (props) => {
   return (
@@ -150,6 +165,35 @@ export const PluginBundleShow = (props) => {
               <TextField source="pluginName" />
             </Datagrid>
           </ArrayField>
+        </Tab>
+        <Tab label="Variants" path="pluginVariant">
+          <SimpleForm save={onSaveVariant} toolbar={<VariantCreateToolbar />}>
+            <TextInput
+                source="description"
+                label="Plugin description"
+                validate={required()}
+            />
+            <NumberInput
+                source="price"
+                label="Price"
+                validate={required()}
+            />
+            <NumberInput source="maxActivations" label="Activation count" />
+            <BooleanInput source="isSubscription" label="Subscription" />
+          </SimpleForm>
+          <ReferenceManyField reference="pluginBundleVariant" target="pluginBundleId" addLabel={false}>
+            <Datagrid>
+              <TextField source="description" />
+              <NumberField
+                  source="price"
+                  label="Price"
+                  options={{ style: "currency", currency: "EUR" }}
+              />
+              <NumberField source="maxActivations" label="Activation count" />
+              <BooleanField source="isSubscription" label="Subscription" />
+              <EditButton />
+            </Datagrid>
+          </ReferenceManyField>
         </Tab>
       </TabbedShowLayout>
     </Show>

@@ -59,11 +59,12 @@ function BundleCard(props) {
         <span style={textStyle}>{bundle.bundleName}</span>
         <span style={textStyle} className="float-end">
           <span style={textStyle}>
-            <i className="far fa-sm fa-comment"></i>10
+            {/*Possible to show amount of purchases and the price*/}
+{/*            <i className="far fa-sm fa-comment"></i>10
           </span>
           <span style={textStyle}>&euro;{bundle.price}</span>
           <span style={textStyle} className="pl-2">
-            <i className="fas fa-sm fa-arrow-down"></i> 1.7k
+            <i className="fas fa-sm fa-arrow-down"></i> 1.7k*/}
           </span>
         </span>
       </div>

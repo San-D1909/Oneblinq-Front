@@ -257,6 +257,7 @@ function AdminDash () {
         icon={SettingsInputComponent}
       />
       <Resource name="pluginVariant" edit={PluginVariantEdit} />
+      <Resource name="pluginBundleVariant" />
     </Admin>
   );
 };
