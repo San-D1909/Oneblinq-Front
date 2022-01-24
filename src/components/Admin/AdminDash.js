@@ -1,24 +1,15 @@
 ﻿import * as React from "react";
-import { forwardRef } from 'react';
-import { AppBar, Admin, Resource, Layout, useLogout   } from "react-admin";
+import { AppBar, Admin, Resource, Layout   } from "react-admin";
 import { UserList, UserShow, UserEdit, UserCreate } from "./Users";
 import { Redirect } from "react-router-dom";
 import simpleRestProvider from "ra-data-simple-rest";
-import {DataProvider} from "ra-core";
 import Typography from '@material-ui/core/Typography';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {
   LicenseList,
   LicenseShow,
   LicenseEdit,
 } from "./License";
 import { PluginList, PluginShow, PluginEdit, PluginCreate } from "./Plugins";
-import {
-  LicenseTypeCreate,
-  LicenseTypeList,
-  LicenseTypeEdit,
-  LicenseTypeShow,
-} from "./LicenseTypes";
 import {
   PluginBundleList,
   PluginBundleCreate,
@@ -30,11 +21,8 @@ import PeopleIcon from "@material-ui/icons/People";
 import SettingsInputHdmiIcon from "@material-ui/icons/SettingsInputHdmi";
 import AccountTree from "@material-ui/icons/AccountTree";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
-import SettingsInputComponent from "@material-ui/icons/SettingsInputComponent";
 import VerifyUserRole from "../VerifyUserRole";
 import {makeStyles} from "@material-ui/core";
-import MenuItem from '@material-ui/core/MenuItem';
-import ExitIcon from '@material-ui/icons/PowerSettingsNew';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,7 +77,6 @@ const addUploadFeature = requestHandler => (type, resource, params) => {
     // if parameter `multiple` is false, then data.pictures is not an array, but single object
     if (params.data.image) {
       return convertFileToBase64(params.data.image).then(base64Picture => {
-        let requestParams = params.data;
         params.data.encodedFileContent = base64Picture;
         params.data.fileName = params.data.image.title;
 
@@ -98,24 +85,6 @@ const addUploadFeature = requestHandler => (type, resource, params) => {
         })
       });
     }
-    // if (params.data.image && params.data.image.length) {
-    //   // only freshly dropped pictures are instance of File
-    //   const formerPictures = params.data.pictures.filter(p => !(p.rawFile instanceof File));
-    //   const newPictures = params.data.pictures.filter(p => p.rawFile instanceof File);
-    //
-    //   return Promise.all(newPictures.map(convertFileToBase64))
-    //       .then(base64Pictures => base64Pictures.map((picture64, index) => ({
-    //         src: picture64,
-    //         title: `${newPictures[index].title}`,
-    //       })))
-    //       .then(transformedNewPictures => requestHandler(type, resource, {
-    //         ...params,
-    //         data: {
-    //           ...params.data,
-    //           pictures: [...transformedNewPictures, ...formerPictures],
-    //         },
-    //       }));
-    // }
   } else {
     switch (type) {
       default:

@@ -1,4 +1,3 @@
-// in src/posts.js
 import * as React from "react";
 import {
   List,
@@ -28,7 +27,6 @@ import {
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
 import axios from "axios";
-import { Checkbox } from "@material-ui/core";
 
 const PluginFilters = [
   <TextInput label="Plugin name" source="pluginName" />,
@@ -51,16 +49,6 @@ export const PluginList = (props) => (
     <Datagrid expand={<PluginPanel />}>
       <ImageField source="image.imageData" label="image" />
       <TextField source="pluginName" label="Plugin name" />
-      {/*<NumberField*/}
-      {/*  source="monthlyPrice"*/}
-      {/*  label="Monthly Price"*/}
-      {/*  options={{ style: "currency", currency: "EUR" }}*/}
-      {/*/>*/}
-      {/*<NumberField*/}
-      {/*  source="fullPrice"*/}
-      {/*  label="Full Price"*/}
-      {/*  options={{ style: "currency", currency: "EUR" }}*/}
-      {/*/>*/}
       <PluginShowButton {...props} />
     </Datagrid>
   </List>
@@ -79,16 +67,6 @@ export const PluginCreate = (props) => (
         label="Plugin description"
         validate={required()}
       />
-      {/*<NumberInput*/}
-      {/*  source="monthlyPrice"*/}
-      {/*  label="Monthly Price"*/}
-      {/*  validate={required()}*/}
-      {/*/>*/}
-      {/*<NumberInput*/}
-      {/*  source="fullPrice"*/}
-      {/*  label="Full Price"*/}
-      {/*  validate={required()}*/}
-      {/*/>*/}
       <ImageInput source="image" label="Plugin image" accept="image/*" placeholder={<p>Drop your file here</p>} minSize={5} validate={required()}>
         <ImageField source="src" title="title"/>
       </ImageInput>
@@ -120,11 +98,6 @@ const PluginShowButton = ({ record }) => {
   return <ShowButton basePath="plugin" label="Show info" record={record} />;
 };
 
-const UsersOverview = (props) => {
-  console.log(props);
-  return <List {...props}></List>;
-};
-
 const VariantCreateToolbar = props => (
   <Toolbar {...props} >
       <SaveButton />
@@ -154,16 +127,6 @@ export const PluginShow = (props) => {
             source="pluginDescription"
             label="Plugin description"
           />
-          {/*<NumberField*/}
-          {/*  source="monthlyPrice"*/}
-          {/*  label="Monthly Price"*/}
-          {/*  options={{ style: "currency", currency: "EUR" }}*/}
-          {/*/>*/}
-          {/*<NumberField*/}
-          {/*  source="fullPrice"*/}
-          {/*  label="Full Price"*/}
-          {/*  options={{ style: "currency", currency: "EUR" }}*/}
-          {/*/>*/}
           <ImageField source="image.imageData" title="title" label="Image"/>
         </Tab>
         <Tab label="Used By" path="user">
