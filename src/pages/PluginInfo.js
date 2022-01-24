@@ -137,13 +137,16 @@ export default function PluginInfo() {
                 <div className="col">
                     <ProductVariants variants={variants} variant={variant} setVariant={setVariant} />
                     <form action={process.env.REACT_APP_API_BACKEND + "/api/v1/CheckoutApi/create-checkout-session"} method="POST">
-                        <input type="hidden" name="priceId" value={variant.stripePriceId} />
-                        <input type="hidden" name="isSubscription" value={variant.isSubscription} />
-                        {/* TODO: auto add email when user is authenticated */}
-                        {/* {authenticated?? 
-                            <input type="hidden" name="email" value={authenticated.user.email} />
-                        } */}
-                        <button className="btn btn-oneblinq-roze mt-2 col-12" type="submit">Subscribe</button>
+                        {variant == null ?
+                            <input className="btn btn-oneblinq-roze mt-2 col-12" type="submit" value="Subscribe" disabled/>
+                            :
+                            <>
+                                <input type="hidden" name="priceId" value={variant.stripePriceId} />
+                                <input type="hidden" name="isSubscription" value={variant.isSubscription} />
+                                <button className="btn btn-oneblinq-roze mt-2 col-12" type="submit">Subscribe</button>
+                            </>
+
+                        }
                     </form>
                 </div>
             </div>

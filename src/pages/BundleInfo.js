@@ -110,7 +110,7 @@ export default function BundleInfo() {
         }
         fetchData()
     }, [bundleId])
-
+    const imageData = bundle.image ? bundle.image.imageData : "https://via.placeholder.com/344x216.png";
     return (
         <>
             <NavMenu />
@@ -123,7 +123,7 @@ export default function BundleInfo() {
 
                     <Card className="order-last">
                         <CardBody className="p-0">
-                            <CardImg className="" src="https:www.figma.com/community/plugin/980021361387673169/thumbnail" />
+                            <CardImg className="" src={imageData} />
 
                         </CardBody>
                     </Card>
@@ -132,9 +132,15 @@ export default function BundleInfo() {
                 <div className="col">
                     <ProductVariants variants={variants} variant={variant} setVariant={setVariant} />
                     <form action={process.env.REACT_APP_API_BACKEND + "/api/v1/CheckoutApi/create-checkout-session"} method="POST">
-                        <input type="hidden" name="priceId" value={variant.stripePriceId} />
-                        <input type="hidden" name="isSubscription" value={variant.isSubscription} />
-                        <button className="btn btn-oneblinq-roze mt-2 col-12" type="submit">Subscribe</button>
+                        {variant == null ?
+                            <input className="btn btn-oneblinq-roze mt-2 col-12" type="submit" value="Subscribe" disabled/>
+                            :
+                            <>
+                                <input type="hidden" name="priceId" value={variant.stripePriceId} />
+                                <input type="hidden" name="isSubscription" value={variant.isSubscription} />
+                                <button className="btn btn-oneblinq-roze mt-2 col-12" type="submit">Subscribe</button>
+                            </>
+                        }
                     </form>
                 </div>
             </div>
