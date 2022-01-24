@@ -6,7 +6,7 @@ export class PluginCard extends Component {
 
     render() {
         console.log(this.props.data);
-        const { id, pluginName, monthlyPrice, image } = this.props.data
+        const { id, pluginName, image } = this.props.data
         const textDecoNone = {
             textDecoration: "none"
         }
@@ -21,7 +21,7 @@ export class PluginCard extends Component {
                     <span>{pluginName}</span>
                     <span className="float-end">
                         {/* <span><i className="far fa-sm fa-comment"></i> 123</span> */}
-                        <span className="pl-2"> &euro;{monthlyPrice}</span>
+                        {/* <span className="pl-2"> &euro;{monthlyPrice}</span> */}
                     </span>
                 </div>
             </a>
