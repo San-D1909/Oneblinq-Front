@@ -1,10 +1,12 @@
 ﻿import * as React from "react";
-import { AppBar, Admin, Resource, Layout, } from "react-admin";
+import { forwardRef } from 'react';
+import { AppBar, Admin, Resource, Layout, useLogout   } from "react-admin";
 import { UserList, UserShow, UserEdit, UserCreate } from "./Users";
 import { Redirect } from "react-router-dom";
 import simpleRestProvider from "ra-data-simple-rest";
 import {DataProvider} from "ra-core";
 import Typography from '@material-ui/core/Typography';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {
   LicenseList,
   LicenseShow,
@@ -31,6 +33,8 @@ import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import SettingsInputComponent from "@material-ui/icons/SettingsInputComponent";
 import VerifyUserRole from "../VerifyUserRole";
 import {makeStyles} from "@material-ui/core";
+import MenuItem from '@material-ui/core/MenuItem';
+import ExitIcon from '@material-ui/icons/PowerSettingsNew';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,8 +84,6 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
 });
 
 const addUploadFeature = requestHandler => (type, resource, params) => {
-  console.log(type);
-  console.log(resource);
   if (type === 'CREATE' && (resource === 'plugin' || resource === 'pluginbundle')) {
     // notice that following condition can be true only when `<ImageInput source="pictures" />` component has parameter `multiple={true}`
     // if parameter `multiple` is false, then data.pictures is not an array, but single object
@@ -169,6 +171,25 @@ const MyAppBar = props => {
 };
 
 const MyLayout = (props) => <Layout {...props} appBar={MyAppBar} />;
+const AuthProvider = {
+  checkError: (error) => { /* ... */ },
+  getIdentity: () => { /* ... */ },
+  checkAuth: () => {
+    return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
+  },
+  logout: () => {
+    console.log("logout")
+    return new Promise((resolve, reject) => {
+      localStorage.removeItem('token');
+      return resolve("/");
+    });
+  },
+  getPermissions: (params) => {
+    return new Promise((resolve, reject) => {
+      resolve([]);
+    });
+  }
+}
 
 function AdminDash () {
 
@@ -190,6 +211,7 @@ function AdminDash () {
   
   return (
     <Admin
+      authProvider={AuthProvider}
       layout={MyLayout}
       theme={newOptions}
       dataProvider={dataProvider}

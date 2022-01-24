@@ -70,7 +70,25 @@ const MyAppBar = props => {
 };
 
 const MyLayout = (props) => <Layout {...props} appBar={MyAppBar} />;
-
+const AuthProvider = {
+  checkError: (error) => { /* ... */ },
+  getIdentity: () => { /* ... */ },
+  checkAuth: () => {
+    return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
+  },
+  logout: () => {
+    console.log("logout")
+    return new Promise((resolve, reject) => {
+      localStorage.removeItem('token');
+      return resolve("/");
+    });
+  },
+  getPermissions: (params) => {
+    return new Promise((resolve, reject) => {
+      resolve([]);
+    });
+  }
+}
 
 function UserDashboard () {
 
@@ -90,7 +108,8 @@ function UserDashboard () {
 
   return (
     <Admin
-    layout={MyLayout}
+      authProvider={AuthProvider}
+      layout={MyLayout}
       theme={newOptions}
       dataProvider={simpleRestProvider(
         process.env.REACT_APP_API_BACKEND + `/api/v1/user/${token}`
