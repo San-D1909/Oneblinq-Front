@@ -114,6 +114,8 @@ export default function PluginInfo() {
         fetchData()
     }, [pluginId])
 
+    const imageData = plugin.image ? plugin.image.imageData : "https://via.placeholder.com/344x216.png";
+    console.log(imageData);
     return (
         <>
             <NavMenu />
@@ -126,7 +128,7 @@ export default function PluginInfo() {
 
                     <Card className="order-last">
                         <CardBody className="p-0">
-                            <CardImg className="" src="https:www.figma.com/community/plugin/980021361387673169/thumbnail" />
+                            <CardImg className="" src={imageData} />
 
                         </CardBody>
                     </Card>

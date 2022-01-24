@@ -97,11 +97,16 @@ export default function BundleInfo() {
     const { bundleId } = useParams();
 
     const [bundle, setPlugin] = useState({})
+    const [variants, setVariants] = useState([])
+    const [variant, setVariant] = useState("")
 
     useEffect(() => {
         const fetchData = async () => {
             const { data: pluginData } = await axios.get(process.env.REACT_APP_API_BACKEND + '/api/v1/PluginBundle/' + bundleId)
+            const { data: variantsData } = await axios.get(process.env.REACT_APP_API_BACKEND + `/api/v1/admin/PluginBundleVariant?filter={"pluginBundleId":${bundleId}}`);
             setPlugin(pluginData)
+            setVariants(variantsData)
+            setVariant(variantsData[0])
         }
         fetchData()
     }, [bundleId])
@@ -125,9 +130,10 @@ export default function BundleInfo() {
                     <div className="p-1" style={textStyling} dangerouslySetInnerHTML={{ __html: bundle.bundleDescription }} />
                 </div>
                 <div className="col">
-
+                    <ProductVariants variants={variants} variant={variant} setVariant={setVariant} />
                     <form action={process.env.REACT_APP_API_BACKEND + "/api/v1/CheckoutApi/create-checkout-session"} method="POST">
-
+                        <input type="hidden" name="priceId" value={variant.stripePriceId} />
+                        <input type="hidden" name="isSubscription" value={variant.isSubscription} />
                         <button className="btn btn-oneblinq-roze mt-2 col-12" type="submit">Subscribe</button>
                     </form>
                 </div>
