@@ -77,12 +77,12 @@ function ProductVariants({ variant, setVariant, variants }) {
                                 <label style={subscriptionOptionStyling}>
                                     <div className="pricetag" style={subscriptionPriceTag}>
                                         <b>€ {variant.price}</b>
-                                        <span> per month</span>
+                                        <span></span>
                                     </div>
                                     <div>
                                         <h4 style={subscriptionTitle}>{variant.description}</h4>
                                     </div>
-                                    <div style={subscriptionSubTitle}>For todo maxamount </div>
+                                    <div style={subscriptionSubTitle}>{variant.maxActivations} activations </div>
                                 </label>
                             </RadioGroup.Description>
                         </>
